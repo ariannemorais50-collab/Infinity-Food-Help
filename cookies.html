@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="estilo.css">
+    <title>Cookies - Infinity Food Help</title>
+</head>
+
+<body>
+    <h1>Cookies</h1>
+
+    <p><strong>Tempo de preparo:</strong> 30 minutos</p>
+    <p><strong>Rendimento:</strong> 12 cookies</p>
+
+    <h2>Ingredientes</h2>
+
+    <ul>
+        <li>2 xícaras de farinha de trigo</li>
+        <li>1/2 xícara de açúcar</li>
+        <li>1/2 xícara de manteiga</li>
+        <li>1 ovo</li>
+        <li>1 colher de chá de fermento</li>
+        <li>100 g de chocolate picado</li>
+    </ul>
+
+    <h2>Modo de preparo</h2>
+
+    <ol>
+        <li>Misture a manteiga e o açúcar.</li>
+        <li>Adicione o ovo e misture bem.</li>
+        <li>Acrescente a farinha e o fermento.</li>
+        <li>Adicione o chocolate picado.</li>
+        <li>Modele os cookies e coloque em uma forma.</li>
+        <li>Asse até ficarem dourados.</li>
+    </ol>
+
+    <br>
+
+    <button onclick="marcarConcluida()">
+        Marcar como concluída
+    </button>
+
+    <p id="mensagem"></p>
+
+    <br><br>
+
+    <button onclick="window.location.href='inicio.html'">
+        Voltar para receitas
+    </button>
+
+<script>
+let usuarioLogado = localStorage.getItem("usuarioLogado");
+
+function marcarConcluida() {
+    localStorage.setItem(
+        "cookiesConcluido_" + usuarioLogado,
+        "sim"
+    );
+
+    document.getElementById("mensagem").innerText =
+        "Receita concluída! ✔️";
+}
+
+window.onload = function() {
+    if (
+        localStorage.getItem(
+            "cookiesConcluido_" + usuarioLogado
+        ) === "sim"
+    ) {
+        document.getElementById("mensagem").innerText =
+            "Receita concluída! ✔️";
+    }
+};
+</script>
+</body>
+</html>

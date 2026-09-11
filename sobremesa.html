@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="estilo.css">
+    <title>Sobremesa - Infinity Food Help</title>
+</head>
+
+<body>
+    <h1>Mousse de Chocolate</h1>
+
+    <p><strong>Tempo de preparo:</strong> 20 minutos</p>
+    <p><strong>Rendimento:</strong> 6 porções</p>
+
+    <h2>Ingredientes</h2>
+
+    <ul>
+        <li>1 lata de leite condensado</li>
+        <li>1 caixa de creme de leite</li>
+        <li>200 g de chocolate</li>
+    </ul>
+
+    <h2>Modo de preparo</h2>
+
+    <ol>
+        <li>Derreta o chocolate.</li>
+        <li>Misture o chocolate com o creme de leite.</li>
+        <li>Acrescente o leite condensado e misture bem.</li>
+        <li>Coloque em recipientes individuais.</li>
+        <li>Leve à geladeira até ficar firme.</li>
+    </ol>
+
+    <br>
+
+    <button onclick="marcarConcluida()">
+        Marcar como concluída
+    </button>
+
+    <p id="mensagem"></p>
+
+    <br><br>
+
+    <button onclick="window.location.href='inicio.html'">
+        Voltar para receitas
+    </button>
+
+<script>
+let usuarioLogado = localStorage.getItem("usuarioLogado");
+
+function marcarConcluida() {
+    localStorage.setItem(
+        "sobremesaConcluido_" + usuarioLogado,
+        "sim"
+    );
+
+    document.getElementById("mensagem").innerText =
+        "Receita concluída! ✔️";
+}
+
+window.onload = function() {
+    if (
+        localStorage.getItem(
+            "sobremesaConcluido_" + usuarioLogado
+        ) === "sim"
+    ) {
+        document.getElementById("mensagem").innerText =
+            "Receita concluída! ✔️";
+    }
+};
+</script>
+</body>
+</html>

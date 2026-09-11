@@ -1,0 +1,94 @@
+<
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="estilo.css">
+    <title>Área do Funcionário - Infinity Food Help</title>
+</head>
+
+<body>
+    <h1>Infinity Food Help</h1>
+
+    <h2>Área do funcionário</h2>
+<h3>Receitas disponíveis</h3>
+  <p id="boasVindas"></p>
+
+<p>Escolha uma categoria:</p>
+<p id="progresso"></p>
+<button onclick="window.location.href='receita.html'">
+    🍫 Chocolates
+</button>
+<p id="statusBrigadeiro"></p>
+<br><br>
+
+<button onclick="window.location.href='bolo.html'">
+    🎂 Bolos
+</button>
+<p id="statusBolo"></p>
+<br><br>
+
+<button onclick="window.location.href='cookies.html'">
+    🍪 Cookies
+</button>
+<p id="statusCookies"></p>
+<br><br>
+
+<button onclick="window.location.href='sobremesa.html'">
+    🍰 Sobremesas
+    </button>
+    <p id="statusSobremesa"></p>
+    <br><br>
+
+<button onclick="sair()">
+    Sair
+</button>
+<script>
+    let usuarioLogado = localStorage.getItem("usuarioLogado");
+
+document.getElementById("boasVindas").innerText =
+    "Bem-vindo(a), " + usuarioLogado + "!";
+
+if (localStorage.getItem("brigadeiroConcluido_" + usuarioLogado) === "sim") {
+    document.getElementById("statusBrigadeiro").innerText =
+        "✅ Concluído";
+
+}if (localStorage.getItem("boloConcluido_" + usuarioLogado) === "sim") {
+    document.getElementById("statusBolo").innerText =
+        "✅ Concluído";
+
+}if (localStorage.getItem("cookiesConcluido_" + usuarioLogado) === "sim") {
+    document.getElementById("statusCookies").innerText =
+        "✅ Concluído";
+
+}if (localStorage.getItem("sobremesaConcluido_" + usuarioLogado) === "sim") {
+    document.getElementById("statusSobremesa").innerText =
+        "✅ Concluído";
+}
+let totalConcluidas = 0;
+
+if (localStorage.getItem("brigadeiroConcluido_" + usuarioLogado) === "sim") {
+    totalConcluidas++;
+}
+
+if (localStorage.getItem("boloConcluido_" + usuarioLogado) === "sim") {
+    totalConcluidas++;
+}
+
+if (localStorage.getItem("cookiesConcluido_" + usuarioLogado) === "sim") {
+    totalConcluidas++;
+}
+
+if (localStorage.getItem("sobremesaConcluido_" + usuarioLogado) === "sim") {
+    totalConcluidas++;
+}
+
+document.getElementById("progresso").innerText =
+    "📊 Progresso: " + totalConcluidas + " de 4 receitas concluídas";
+function sair() {
+    localStorage.removeItem("usuarioLogado");
+    window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

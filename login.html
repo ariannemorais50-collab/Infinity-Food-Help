@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="estilo.css">
+    <title>Login - Infinity Food Help</title>
+</head>
+
+<body>
+  <h1>Infinity Food Help</h1>
+
+<h2>Login do funcionário</h2>
+
+<label>Usuário:</label>
+<input type="text" id="usuario">
+
+<br><br>
+
+<label>Senha:</label>
+<input type="password" id="senha">
+
+<br><br>
+
+<button onclick="fazerLogin()">Entrar</button>
+
+<p id="mensagem"></p>
+
+<script>
+function fazerLogin() {
+    let usuario = document.getElementById("usuario").value;
+    let senha = document.getElementById("senha").value;
+
+    if (
+        (usuario === "ana" && senha === "1234") ||
+        (usuario === "marcos" && senha === "5678") ||
+        (usuario === "maria" && senha === "9012")
+    ) {
+        localStorage.setItem("usuarioLogado", usuario);
+        window.location.href = "inicio.html";
+    } else {
+        document.getElementById("mensagem").innerText =
+            "Usuário ou senha incorretos.";
+    }
+}
+</script>
+</body>
+</html>

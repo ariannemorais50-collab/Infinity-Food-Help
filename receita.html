@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="estilo.css">
+    <title>Receita de Brigadeiro - Infinity Food Help</title>
+</head>
+
+<body>
+    <h1>Brigadeiro</h1>
+<p><strong>Tempo de preparo:</strong> 30 minutos</p>
+<p><strong>Rendimento:</strong> 20 brigadeiros</p>
+    <h2>Ingredientes</h2>
+
+    <ul>
+        <li>1 lata de leite condensado</li>
+        <li>1 colher de sopa de manteiga</li>
+        <li>3 colheres de sopa de chocolate em pó</li>
+        <li>Granulado</li>
+    </ul>
+
+    <h2>Modo de preparo</h2>
+
+    <ol>
+        <li>Coloque o leite condensado, a manteiga e o chocolate em pó na panela.</li>
+        <li>Leve ao fogo baixo, mexendo sempre.</li>
+        <li>Mexa até a massa desgrudar do fundo da panela.</li>
+        <li>Deixe esfriar.</li>
+        <li>Enrole os brigadeiros e passe no granulado.</li>
+    </ol><br>
+
+ <button onclick="marcarConcluida()">
+        Marcar como concluída
+    </button>
+
+    <p id="mensagem"></p>
+
+    <br><br>
+
+    <button onclick="window.location.href='inicio.html'">
+        Voltar para receitas
+    </button>
+
+ <script>
+let usuarioLogado = localStorage.getItem("usuarioLogado");
+
+function marcarConcluida() {
+    localStorage.setItem(
+        "brigadeiroConcluido_" + usuarioLogado,
+        "sim"
+    );
+
+    document.getElementById("mensagem").innerText =
+        "Receita concluída! ✔️";
+}
+
+window.onload = function() {
+    if (
+        localStorage.getItem(
+            "brigadeiroConcluido_" + usuarioLogado
+        ) === "sim"
+    ) {
+        document.getElementById("mensagem").innerText =
+            "Receita concluída! ✔️";
+    }
+};
+</script>
+</body>
+</html>
