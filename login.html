@@ -1,46 +1,72 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" href="estilo.css">
     <title>Login - Infinity Food Help</title>
 </head>
 
 <body>
-  <h1>Infinity Food Help</h1>
 
-<h2>Login do funcionário</h2>
+    <div class="login-container">
 
-<label>Usuário:</label>
-<input type="text" id="usuario">
+        <div class="login-card">
 
-<br><br>
+            <h1>Infinity Food Help</h1>
 
-<label>Senha:</label>
-<input type="password" id="senha">
+            <h2>Login do funcionário</h2>
 
-<br><br>
+            <label for="usuario">Usuário</label>
+            <input type="text" id="usuario" placeholder="Digite seu usuário">
 
-<button onclick="fazerLogin()">Entrar</button>
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" placeholder="Digite sua senha">
+
+  <button onclick="fazerLogin()">
+    Entrar
+</button>
+
+<button class="botao-cadastro" onclick="window.location.href='cadastro.html'">
+    Criar uma conta
+</button>
 
 <p id="mensagem"></p>
 
-<script>
-function fazerLogin() {
-    let usuario = document.getElementById("usuario").value;
-    let senha = document.getElementById("senha").value;
+        </div>
 
-    if (
-        (usuario === "ana" && senha === "1234") ||
-        (usuario === "marcos" && senha === "5678") ||
-        (usuario === "maria" && senha === "9012")
-    ) {
-        localStorage.setItem("usuarioLogado", usuario);
-        window.location.href = "inicio.html";
-    } else {
-        document.getElementById("mensagem").innerText =
-            "Usuário ou senha incorretos.";
-    }
-}
-</script>
+    </div>
+
+    <script>
+
+        function fazerLogin() {
+
+            let usuario = document.getElementById("usuario").value;
+            let senha = document.getElementById("senha").value;
+
+  let senhaSalva = localStorage.getItem("usuario_" + usuario);
+
+if (
+    (usuario === "ana" && senha === "1234") ||
+    (usuario === "marcos" && senha === "5678") ||
+    (usuario === "maria" && senha === "9012") ||
+    (senhaSalva !== null && senhaSalva === senha)
+)
+            {
+
+                localStorage.setItem("usuarioLogado", usuario);
+
+                window.location.href = "inicio.html";
+
+            } else {
+
+                document.getElementById("mensagem").innerText =
+                    "Usuário ou senha incorretos.";
+
+            }
+
+        }
+
+    </script>
+
 </body>
 </html>

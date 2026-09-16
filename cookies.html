@@ -1,75 +1,205 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" href="estilo.css">
     <title>Cookies - Infinity Food Help</title>
 </head>
 
 <body>
-    <h1>Cookies</h1>
 
-    <p><strong>Tempo de preparo:</strong> 30 minutos</p>
-    <p><strong>Rendimento:</strong> 12 cookies</p>
+    <div class="receita-container">
 
-    <h2>Ingredientes</h2>
+        <button class="voltar" onclick="window.location.href='inicio.html'">
+            ← Voltar
+        </button>
 
-    <ul>
-        <li>2 xícaras de farinha de trigo</li>
-        <li>1/2 xícara de açúcar</li>
-        <li>1/2 xícara de manteiga</li>
-        <li>1 ovo</li>
-        <li>1 colher de chá de fermento</li>
-        <li>100 g de chocolate picado</li>
-    </ul>
+        <div class="receita-card">
 
-    <h2>Modo de preparo</h2>
+            <div class="receita-imagem">
+                <span>IMAGEM</span>
+            </div>
 
-    <ol>
-        <li>Misture a manteiga e o açúcar.</li>
-        <li>Adicione o ovo e misture bem.</li>
-        <li>Acrescente a farinha e o fermento.</li>
-        <li>Adicione o chocolate picado.</li>
-        <li>Modele os cookies e coloque em uma forma.</li>
-        <li>Asse até ficarem dourados.</li>
-    </ol>
+            <div class="receita-conteudo">
 
-    <br>
+                <h1>Cookies</h1>
 
-    <button onclick="marcarConcluida()">
-        Marcar como concluída
-    </button>
+                <p class="descricao">
+                    Uma receita prática para facilitar o preparo.
+                </p>
 
-    <p id="mensagem"></p>
+                <div class="informacoes">
 
-    <br><br>
+                    <div>
+                        <strong>⏱️ Tempo</strong>
+                        <span>30 minutos</span>
+                    </div>
 
-    <button onclick="window.location.href='inicio.html'">
-        Voltar para receitas
-    </button>
+                    <div>
+                        <strong>🍪 Rendimento</strong>
+                        <span>12 cookies</span>
+                    </div>
 
-<script>
-let usuarioLogado = localStorage.getItem("usuarioLogado");
+                </div>
 
-function marcarConcluida() {
-    localStorage.setItem(
-        "cookiesConcluido_" + usuarioLogado,
-        "sim"
-    );
+                <h2>Ingredientes</h2>
 
-    document.getElementById("mensagem").innerText =
-        "Receita concluída! ✔️";
-}
+                <ul>
+                    <li>2 xícaras de farinha de trigo</li>
+                    <li>1/2 xícara de açúcar</li>
+                    <li>1/2 xícara de manteiga</li>
+                    <li>1 ovo</li>
+                    <li>1 colher de chá de fermento</li>
+                    <li>100 g de chocolate picado</li>
+                </ul>
 
-window.onload = function() {
-    if (
-        localStorage.getItem(
-            "cookiesConcluido_" + usuarioLogado
-        ) === "sim"
-    ) {
-        document.getElementById("mensagem").innerText =
-            "Receita concluída! ✔️";
-    }
-};
-</script>
+            </div>
+
+        </div>
+
+        <div class="preparo-card">
+
+            <h2>Modo de preparo</h2>
+
+            <ol>
+                <li>Misture a manteiga e o açúcar.</li>
+                <li>Adicione o ovo e misture bem.</li>
+                <li>Acrescente a farinha e o fermento.</li>
+                <li>Adicione o chocolate picado.</li>
+                <li>Modele os cookies e coloque em uma forma.</li>
+                <li>Asse até ficarem dourados.</li>
+            </ol>
+
+        </div>
+
+        <div class="checklist-card">
+
+            <h2>✓ Checklist de preparo</h2>
+
+            <p>Marque cada etapa conforme for concluindo.</p>
+
+            <label>
+                <input type="checkbox">
+                Separar os ingredientes
+            </label>
+
+            <label>
+                <input type="checkbox">
+                Misturar a manteiga e o açúcar
+            </label>
+
+            <label>
+                <input type="checkbox">
+                Adicionar o ovo
+            </label>
+
+            <label>
+                <input type="checkbox">
+                Acrescentar farinha e fermento
+            </label>
+
+            <label>
+                <input type="checkbox">
+                Adicionar o chocolate
+            </label>
+
+            <label>
+                <input type="checkbox">
+                Modelar e assar os cookies
+            </label>
+
+        </div>
+
+        <p class="progresso-checklist">
+            Progresso: 0 de 6 etapas concluídas
+        </p>
+
+        <button class="concluir" onclick="marcarConcluida()">
+            Marcar receita como concluída
+        </button>
+
+        <p id="mensagem"></p>
+
+    </div>
+
+    <script>
+
+        let usuarioLogado = localStorage.getItem("usuarioLogado");
+
+        const checkboxes = document.querySelectorAll(
+            '.checklist-card input[type="checkbox"]'
+        );
+
+        const progresso = document.querySelector(".progresso-checklist");
+
+        checkboxes.forEach((checkbox, index) => {
+
+            const salvo = localStorage.getItem(
+                "checklistCookies_" + usuarioLogado + "_" + index
+            );
+
+            if (salvo === "sim") {
+                checkbox.checked = true;
+            }
+
+            checkbox.addEventListener("change", function() {
+
+                localStorage.setItem(
+                    "checklistCookies_" + usuarioLogado + "_" + index,
+                    checkbox.checked ? "sim" : "nao"
+                );
+
+                atualizarProgresso();
+
+            });
+
+        });
+
+        function atualizarProgresso() {
+
+            let total = 0;
+
+            checkboxes.forEach(function(checkbox) {
+
+                if (checkbox.checked) {
+                    total++;
+                }
+
+            });
+
+            progresso.innerText =
+                "Progresso: " + total + " de 6 etapas concluídas";
+        }
+
+        function marcarConcluida() {
+
+            localStorage.setItem(
+                "cookiesConcluido_" + usuarioLogado,
+                "sim"
+            );
+
+            document.getElementById("mensagem").innerText =
+                "Receita concluída! ✔️";
+        }
+
+        window.onload = function() {
+
+            atualizarProgresso();
+
+            if (
+                localStorage.getItem(
+                    "cookiesConcluido_" + usuarioLogado
+                ) === "sim"
+            ) {
+
+                document.getElementById("mensagem").innerText =
+                    "Receita concluída! ✔️";
+
+            }
+
+        };
+
+    </script>
+
 </body>
 </html>

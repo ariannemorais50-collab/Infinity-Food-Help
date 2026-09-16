@@ -1,94 +1,147 @@
-<
 <!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" href="estilo.css">
     <title>Área do Funcionário - Infinity Food Help</title>
 </head>
 
 <body>
-    <h1>Infinity Food Help</h1>
 
-    <h2>Área do funcionário</h2>
-<h3>Receitas disponíveis</h3>
-  <p id="boasVindas"></p>
+    <div class="funcionario-container">
 
-<p>Escolha uma categoria:</p>
-<p id="progresso"></p>
-<button onclick="window.location.href='receita.html'">
-    🍫 Chocolates
-</button>
-<p id="statusBrigadeiro"></p>
-<br><br>
+        <div class="funcionario-topo">
 
-<button onclick="window.location.href='bolo.html'">
-    🎂 Bolos
-</button>
-<p id="statusBolo"></p>
-<br><br>
+            <div>
+                <h1>Infinity Food Help</h1>
+                <p id="boasVindas"></p>
+            </div>
 
-<button onclick="window.location.href='cookies.html'">
-    🍪 Cookies
-</button>
-<p id="statusCookies"></p>
-<br><br>
+            <button class="botao-sair" onclick="sair()">
+                Sair
+            </button>
 
-<button onclick="window.location.href='sobremesa.html'">
-    🍰 Sobremesas
-    </button>
-    <p id="statusSobremesa"></p>
-    <br><br>
+        </div>
 
-<button onclick="sair()">
-    Sair
-</button>
-<script>
-    let usuarioLogado = localStorage.getItem("usuarioLogado");
+        <div class="funcionario-intro">
+
+            <h2>Área do funcionário</h2>
+
+            <p>
+                Escolha uma receita para aprender o passo a passo.
+            </p>
+
+            <div class="progresso-box">
+                <strong>📊 Seu progresso</strong>
+                <p id="progresso"></p>
+            </div>
+
+        </div>
+
+        <h3>Receitas disponíveis</h3>
+
+        <div class="receitas-grid">
+
+            <div class="receita-menu">
+                <div class="receita-icone">🍫</div>
+                <h2>Chocolates</h2>
+                <p>Aprenda o preparo dos nossos chocolates.</p>
+                <button onclick="window.location.href='receita.html'">
+                    Ver receita
+                </button>
+                <p id="statusBrigadeiro"></p>
+            </div>
+
+            <div class="receita-menu">
+                <div class="receita-icone">🎂</div>
+                <h2>Bolos</h2>
+                <p>Confira o passo a passo dos nossos bolos.</p>
+                <button onclick="window.location.href='bolo.html'">
+                    Ver receita
+                </button>
+                <p id="statusBolo"></p>
+            </div>
+
+            <div class="receita-menu">
+                <div class="receita-icone">🍪</div>
+                <h2>Cookies</h2>
+                <p>Aprenda a preparar nossos cookies.</p>
+                <button onclick="window.location.href='cookies.html'">
+                    Ver receita
+                </button>
+                <p id="statusCookies"></p>
+            </div>
+
+            <div class="receita-menu">
+                <div class="receita-icone">🍰</div>
+                <h2>Sobremesas</h2>
+                <p>Confira nossas receitas de sobremesas.</p>
+                <button onclick="window.location.href='sobremesa.html'">
+                    Ver receita
+                </button>
+                <p id="statusSobremesa"></p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        let usuarioLogado = localStorage.getItem("usuarioLogado");
+
+ let nomeFuncionario =
+    localStorage.getItem("nome_" + usuarioLogado) || usuarioLogado;
 
 document.getElementById("boasVindas").innerText =
-    "Bem-vindo(a), " + usuarioLogado + "!";
+    "Bem-vindo(a), " + nomeFuncionario + "!";
+        if (localStorage.getItem("brigadeiroConcluido_" + usuarioLogado) === "sim") {
+            document.getElementById("statusBrigadeiro").innerText =
+                "✅ Concluído";
+        }
 
-if (localStorage.getItem("brigadeiroConcluido_" + usuarioLogado) === "sim") {
-    document.getElementById("statusBrigadeiro").innerText =
-        "✅ Concluído";
+        if (localStorage.getItem("boloConcluido_" + usuarioLogado) === "sim") {
+            document.getElementById("statusBolo").innerText =
+                "✅ Concluído";
+        }
 
-}if (localStorage.getItem("boloConcluido_" + usuarioLogado) === "sim") {
-    document.getElementById("statusBolo").innerText =
-        "✅ Concluído";
+        if (localStorage.getItem("cookiesConcluido_" + usuarioLogado) === "sim") {
+            document.getElementById("statusCookies").innerText =
+                "✅ Concluído";
+        }
 
-}if (localStorage.getItem("cookiesConcluido_" + usuarioLogado) === "sim") {
-    document.getElementById("statusCookies").innerText =
-        "✅ Concluído";
+        if (localStorage.getItem("sobremesaConcluido_" + usuarioLogado) === "sim") {
+            document.getElementById("statusSobremesa").innerText =
+                "✅ Concluído";
+        }
 
-}if (localStorage.getItem("sobremesaConcluido_" + usuarioLogado) === "sim") {
-    document.getElementById("statusSobremesa").innerText =
-        "✅ Concluído";
-}
-let totalConcluidas = 0;
+        let totalConcluidas = 0;
 
-if (localStorage.getItem("brigadeiroConcluido_" + usuarioLogado) === "sim") {
-    totalConcluidas++;
-}
+        if (localStorage.getItem("brigadeiroConcluido_" + usuarioLogado) === "sim") {
+            totalConcluidas++;
+        }
 
-if (localStorage.getItem("boloConcluido_" + usuarioLogado) === "sim") {
-    totalConcluidas++;
-}
+        if (localStorage.getItem("boloConcluido_" + usuarioLogado) === "sim") {
+            totalConcluidas++;
+        }
 
-if (localStorage.getItem("cookiesConcluido_" + usuarioLogado) === "sim") {
-    totalConcluidas++;
-}
+        if (localStorage.getItem("cookiesConcluido_" + usuarioLogado) === "sim") {
+            totalConcluidas++;
+        }
 
-if (localStorage.getItem("sobremesaConcluido_" + usuarioLogado) === "sim") {
-    totalConcluidas++;
-}
+        if (localStorage.getItem("sobremesaConcluido_" + usuarioLogado) === "sim") {
+            totalConcluidas++;
+        }
 
-document.getElementById("progresso").innerText =
-    "📊 Progresso: " + totalConcluidas + " de 4 receitas concluídas";
-function sair() {
-    localStorage.removeItem("usuarioLogado");
-    window.location.href = "login.html";
-}
-</script>
+        document.getElementById("progresso").innerText =
+            totalConcluidas + " de 4 receitas concluídas";
+
+        function sair() {
+            localStorage.removeItem("usuarioLogado");
+            window.location.href = "login.html";
+        }
+
+    </script>
 
 </body>
 </html>

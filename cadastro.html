@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="estilo.css">
+    <title>Criar conta - Infinity Food Help</title>
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <div class="login-card">
+
+            <h1>Infinity Food Help</h1>
+
+            <h2>Criar uma conta</h2>
+
+            <label for="novoUsuario">Usuário</label>
+            <input type="text" id="novoUsuario" placeholder="Crie seu usuário">
+<label for="nome">Nome</label>
+<input type="text" id="nome" placeholder="Digite seu nome">
+            <label for="novaSenha">Senha</label>
+            <input type="password" id="novaSenha" placeholder="Crie sua senha">
+
+            <button onclick="criarConta()">
+                Criar conta
+            </button>
+
+            <button class="botao-cadastro" onclick="window.location.href='login.html'">
+                Voltar para o login
+            </button>
+
+            <p id="mensagem"></p>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        function criarConta() {
+
+let nome = document.getElementById("nome").value;
+let usuario = document.getElementById("novoUsuario").value;
+let senha = document.getElementById("novaSenha").value;
+            if (nome === "" || usuario === "" || senha === "") {
+
+                document.getElementById("mensagem").innerText =
+                    "Preencha todos os campos.";
+
+                return;
+            }
+
+if (localStorage.getItem("usuario_" + usuario) !== null) {
+
+    document.getElementById("mensagem").innerText =
+        "Esse usuário já existe.";
+
+    return;
+}
+
+localStorage.setItem("usuario_" + usuario, senha);
+localStorage.setItem("nome_" + usuario, nome);
+            document.getElementById("mensagem").innerText =
+                "Conta criada com sucesso! ✔️";
+
+        }
+
+    </script>
+
+</body>
+</html>

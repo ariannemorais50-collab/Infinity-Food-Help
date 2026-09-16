@@ -1,71 +1,196 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" href="estilo.css">
-    <title>Sobremesa - Infinity Food Help</title>
+    <title>Mousse de Chocolate - Infinity Food Help</title>
 </head>
 
 <body>
-    <h1>Mousse de Chocolate</h1>
 
-    <p><strong>Tempo de preparo:</strong> 20 minutos</p>
-    <p><strong>Rendimento:</strong> 6 porções</p>
+    <div class="receita-container">
 
-    <h2>Ingredientes</h2>
+        <button class="voltar" onclick="window.location.href='inicio.html'">
+            ← Voltar
+        </button>
 
-    <ul>
-        <li>1 lata de leite condensado</li>
-        <li>1 caixa de creme de leite</li>
-        <li>200 g de chocolate</li>
-    </ul>
+        <div class="receita-card">
 
-    <h2>Modo de preparo</h2>
+            <div class="receita-imagem">
+                <span>IMAGEM</span>
+            </div>
 
-    <ol>
-        <li>Derreta o chocolate.</li>
-        <li>Misture o chocolate com o creme de leite.</li>
-        <li>Acrescente o leite condensado e misture bem.</li>
-        <li>Coloque em recipientes individuais.</li>
-        <li>Leve à geladeira até ficar firme.</li>
-    </ol>
+            <div class="receita-conteudo">
 
-    <br>
+                <h1>Mousse de Chocolate</h1>
 
-    <button onclick="marcarConcluida()">
-        Marcar como concluída
-    </button>
+                <p class="descricao">
+                    Uma receita prática para facilitar o preparo.
+                </p>
 
-    <p id="mensagem"></p>
+                <div class="informacoes">
 
-    <br><br>
+                    <div>
+                        <strong>⏱️ Tempo</strong>
+                        <span>20 minutos</span>
+                    </div>
 
-    <button onclick="window.location.href='inicio.html'">
-        Voltar para receitas
-    </button>
+                    <div>
+                        <strong>🍰 Rendimento</strong>
+                        <span>6 porções</span>
+                    </div>
 
-<script>
-let usuarioLogado = localStorage.getItem("usuarioLogado");
+                </div>
 
-function marcarConcluida() {
-    localStorage.setItem(
-        "sobremesaConcluido_" + usuarioLogado,
-        "sim"
-    );
+                <h2>Ingredientes</h2>
 
-    document.getElementById("mensagem").innerText =
-        "Receita concluída! ✔️";
-}
+                <ul>
+                    <li>1 lata de leite condensado</li>
+                    <li>1 caixa de creme de leite</li>
+                    <li>200 g de chocolate</li>
+                </ul>
 
-window.onload = function() {
-    if (
-        localStorage.getItem(
-            "sobremesaConcluido_" + usuarioLogado
-        ) === "sim"
-    ) {
-        document.getElementById("mensagem").innerText =
-            "Receita concluída! ✔️";
-    }
-};
-</script>
+            </div>
+
+        </div>
+
+        <div class="preparo-card">
+
+            <h2>Modo de preparo</h2>
+
+            <ol>
+                <li>Derreta o chocolate.</li>
+                <li>Misture o chocolate com o creme de leite.</li>
+                <li>Acrescente o leite condensado e misture bem.</li>
+                <li>Coloque em recipientes individuais.</li>
+                <li>Leve à geladeira até ficar firme.</li>
+            </ol>
+
+        </div>
+
+        <div class="checklist-card">
+
+            <h2>✓ Checklist de preparo</h2>
+
+            <p>Marque cada etapa conforme for concluindo.</p>
+
+            <label>
+                <input type="checkbox">
+                Separar os ingredientes
+            </label>
+
+            <label>
+                <input type="checkbox">
+                Derreter o chocolate
+            </label>
+
+            <label>
+                <input type="checkbox">
+                Misturar o chocolate e o creme de leite
+            </label>
+
+            <label>
+                <input type="checkbox">
+                Adicionar o leite condensado
+            </label>
+
+            <label>
+                <input type="checkbox">
+                Colocar nos recipientes e levar à geladeira
+            </label>
+
+        </div>
+
+        <p class="progresso-checklist">
+            Progresso: 0 de 5 etapas concluídas
+        </p>
+
+        <button class="concluir" onclick="marcarConcluida()">
+            Marcar receita como concluída
+        </button>
+
+        <p id="mensagem"></p>
+
+    </div>
+
+    <script>
+
+        let usuarioLogado = localStorage.getItem("usuarioLogado");
+
+        const checkboxes = document.querySelectorAll(
+            '.checklist-card input[type="checkbox"]'
+        );
+
+        const progresso = document.querySelector(".progresso-checklist");
+
+        checkboxes.forEach((checkbox, index) => {
+
+            const salvo = localStorage.getItem(
+                "checklistSobremesa_" + usuarioLogado + "_" + index
+            );
+
+            if (salvo === "sim") {
+                checkbox.checked = true;
+            }
+
+            checkbox.addEventListener("change", function() {
+
+                localStorage.setItem(
+                    "checklistSobremesa_" + usuarioLogado + "_" + index,
+                    checkbox.checked ? "sim" : "nao"
+                );
+
+                atualizarProgresso();
+
+            });
+
+        });
+
+        function atualizarProgresso() {
+
+            let total = 0;
+
+            checkboxes.forEach(function(checkbox) {
+
+                if (checkbox.checked) {
+                    total++;
+                }
+
+            });
+
+            progresso.innerText =
+                "Progresso: " + total + " de 5 etapas concluídas";
+        }
+
+        function marcarConcluida() {
+
+            localStorage.setItem(
+                "sobremesaConcluido_" + usuarioLogado,
+                "sim"
+            );
+
+            document.getElementById("mensagem").innerText =
+                "Receita concluída! ✔️";
+        }
+
+        window.onload = function() {
+
+            atualizarProgresso();
+
+            if (
+                localStorage.getItem(
+                    "sobremesaConcluido_" + usuarioLogado
+                ) === "sim"
+            ) {
+
+                document.getElementById("mensagem").innerText =
+                    "Receita concluída! ✔️";
+
+            }
+
+        };
+
+    </script>
+
 </body>
 </html>

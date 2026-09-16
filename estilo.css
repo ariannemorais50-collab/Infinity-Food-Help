@@ -1,53 +1,543 @@
+/* =========================
+   CORES DO PROJETO
+   ========================= */
+
+:root {
+    --branco: #FFFDFB;
+    --vinho: #4D0011;
+    --marsala: #7B1830;
+    --marsala-claro: #A64A5F;
+    --vermelho: #b00020;
+}
+
+/* =========================
+   GERAL
+   ========================= */
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #fff5f0;
     margin: 0;
-    padding: 30px;
-}
-
-h1 {
-    color: #8b4513;
-    font-size: 36px;
-}
-
-h2 {
-    color: #5c4033;
-}
-
-h3 {
-    color: #8b4513;
-}
-
-p {
-    color: #4a4a4a;
-    font-size: 17px;
+    background-color: var(--branco);
+    color: var(--vinho);
+    font-family: "Montserrat", sans-serif;
 }
 
 button {
-    padding: 12px 25px;
-    margin: 8px;
-    font-size: 16px;
+    font-family: "Montserrat", sans-serif;
     cursor: pointer;
+}
+
+/* =========================
+   TELA INICIAL
+   ========================= */
+
+.pagina-inicial {
+    min-height: 100vh;
+    display: flex;
+    padding: 30px;
+}
+
+.lado-esquerdo {
+    width: 60%;
+    padding: 70px;
+    background-color: var(--branco);
+    border-radius: 30px 0 0 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.lado-esquerdo h1 {
+    font-family: "Lobster", cursive;
+    font-size: 60px;
+    color: var(--vinho);
+    margin: 0 0 18px;
+}
+
+.lado-esquerdo h2 {
+    font-size: 28px;
+    color: var(--marsala);
+    max-width: 560px;
+    margin-bottom: 20px;
+}
+
+.lado-esquerdo p {
+    font-size: 17px;
+    color: var(--vinho);
+    max-width: 560px;
+    line-height: 1.6;
+}
+
+.lado-esquerdo button {
+    width: 190px;
+    padding: 15px 25px;
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
     border: none;
-    border-radius: 10px;
-    background-color: #d99a6c;
+    border-radius: 14px;
+    background-color: var(--marsala);
+    color: white;
+    box-shadow: 0 5px 15px rgba(77, 0, 17, 0.18);
+}
+
+.lado-esquerdo button:hover {
+    background-color: var(--vinho);
+}
+
+.autores {
+    margin-top: 60px;
+    font-size: 13px !important;
+    font-weight: bold;
+    color: var(--marsala) !important;
+}
+
+.lado-direito {
+    width: 40%;
+    background-color: var(--marsala);
+    border-radius: 0 30px 30px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+.imagem-placeholder {
+    width: 85%;
+    height: 85%;
+    min-height: 400px;
+    border-radius: 24px;
+    border: 2px dashed white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* =========================
+   ÁREA DO FUNCIONÁRIO
+   ========================= */
+
+body > h1 {
+    padding-top: 40px;
+    font-family: "Lobster", cursive;
+    color: var(--vinho);
+}
+
+body > h1,
+body > h2,
+body > h3,
+body > p,
+body > button {
+    margin-left: 8%;
+}
+
+body > h2,
+body > h3 {
+    color: var(--marsala);
+}
+
+body > p {
+    color: var(--vinho);
+}
+
+body > button {
+    background-color: var(--marsala);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 22px;
+    font-weight: bold;
+}
+
+body > button:hover {
+    background-color: var(--vinho);
+}
+
+/* =========================
+   TELA DE RECEITA
+   ========================= */
+
+.receita-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 35px 25px 50px;
+}
+
+.voltar {
+    background: transparent;
+    color: var(--marsala);
+    border: none;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 8px 0;
+    margin-bottom: 18px;
+}
+
+.voltar:hover {
+    color: var(--vinho);
+}
+
+.receita-card {
+    background-color: white;
+    border: 2px solid var(--rosa-claro);
+    border-radius: 28px;
+    padding: 30px;
+    display: flex;
+    gap: 35px;
+    box-shadow: 0 8px 25px rgba(77, 0, 17, 0.10);
+}
+
+.receita-imagem {
+    width: 42%;
+    min-height: 350px;
+    background-color: var(--marsala);
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--marsala);
+    font-size: 20px;
+}
+
+.receita-conteudo {
+    flex: 1;
+}
+
+.receita-conteudo h1 {
+    font-family: "Lobster", cursive;
+    font-size: 48px;
+    color: var(--vinho);
+    margin-top: 5px;
+}
+
+.descricao {
+    color: var(--vinho);
+}
+
+.informacoes {
+    display: flex;
+    gap: 12px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+}
+
+.informacoes div {
+    background-color: var(--rosa-claro);
+    border-radius: 12px;
+    padding: 12px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.informacoes strong {
+    color: var(--vinho);
+}
+
+.informacoes span {
+    color: var(--marsala);
+}
+
+.receita-conteudo h2,
+.preparo-card h2,
+.checklist-card h2 {
+    color: var(--marsala);
+}
+
+.receita-conteudo li,
+.preparo-card li {
+    color: var(--vinho);
+    margin-bottom: 10px;
+}
+
+.preparo-card {
+    background-color: white;
+    border: 2px solid var(--rosa-claro);
+    border-radius: 28px;
+    padding: 30px;
+    margin-top: 25px;
+    box-shadow: 0 8px 25px rgba(77, 0, 17, 0.08);
+}
+
+/* =========================
+   CHECKLIST
+   ========================= */
+
+.checklist-card {
+    background-color: var(--marsala);
+    border-radius: 24px;
+    padding: 30px;
+    margin-top: 25px;
+}
+
+.checklist-card h2 {
     color: white;
 }
 
-button:hover {
-    background-color: #b9784d;
+.checklist-card p {
+    color: white;
 }
 
-ul, ol {
-    display: inline-block;
-    text-align: left;
-    max-width: 600px;
+.checklist-card label {
+    display: block;
+    background-color: white;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 12px;
+    cursor: pointer;
+    color: var(--vinho);
 }
 
-input {
-    padding: 10px;
-    margin: 5px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+.checklist-card input {
+    margin-right: 10px;
+    accent-color: var(--marsala);
+}
+
+.progresso-checklist {
+    text-align: center;
+    font-weight: bold;
+    color: var(--marsala);
+    margin-top: 20px;
+}
+
+.concluir {
+    display: block;
+    margin: 20px auto;
+    padding: 14px 25px;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--vinho);
+    color: white;
+    font-weight: bold;
+}
+
+.concluir:hover {
+    background-color: var(--marsala);
+}
+
+#mensagem {
+    text-align: center;
+    font-weight: bold;
+    color: var(--marsala);
+}
+/* =========================
+   TELA DE LOGIN
+   ========================= */
+
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--marsala);
+    padding: 30px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 450px;
+    background-color: white;
+    border-radius: 28px;
+    padding: 45px;
+    box-shadow: 0 10px 30px rgba(77, 0, 17, 0.20);
+}
+
+.login-card h1 {
+    font-family: "Lobster", cursive;
+    font-size: 40px;
+    color: var(--vinho);
+    text-align: center;
+    margin: 0 0 10px;
+}
+
+.login-card h2 {
+    color: var(--marsala);
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.login-card label {
+    display: block;
+    font-weight: bold;
+    color: var(--vinho);
+    margin-bottom: 8px;
+}
+
+.login-card input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 20px;
+    border: 2px solid var(--rosa-claro);
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: "Montserrat", sans-serif;
+}
+
+.login-card input:focus {
+    outline: none;
+    border-color: var(--marsala);
+}
+
+.login-card button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--marsala);
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.login-card button:hover {
+    background-color: var(--vinho);
+}
+
+.login-card #mensagem {
+    text-align: center;
+    margin-top: 20px;
+    color: var(--marsala);
+    font-weight: bold;
+}
+.botao-cadastro {
+    background-color: transparent !important;
+    color: var(--marsala) !important;
+    font-size: 14px !important;
+    padding: 8px !important;
+    margin-top: 5px !important;
+    box-shadow: none !important;
+}
+
+.botao-cadastro:hover {
+    color: var(--vinho) !important;
+    text-decoration: underline;
+}
+/* =========================
+   ÁREA DO FUNCIONÁRIO
+   ========================= */
+
+.funcionario-container {
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: 35px 25px 60px;
+}
+
+.funcionario-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 35px;
+}
+
+.funcionario-topo h1 {
+    font-family: "Lobster", cursive;
+    font-size: 48px;
+    color: var(--vinho);
+    margin: 0;
+}
+
+.funcionario-topo p {
+    color: var(--marsala);
+    font-weight: bold;
+}
+
+.botao-sair {
+    background-color: var(--marsala);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 22px;
+    font-weight: bold;
+}
+
+.botao-sair:hover {
+    background-color: var(--vinho);
+}
+
+.funcionario-intro h2 {
+    color: var(--vinho);
+    font-size: 32px;
+    margin-bottom: 5px;
+}
+
+.funcionario-intro > p {
+    color: var(--marsala);
+}
+
+.progresso-box {
+    background-color: var(--marsala);
+    color: white;
+    border-radius: 18px;
+    padding: 18px 22px;
+    margin: 25px 0 40px;
+}
+
+.progresso-box strong {
+    font-size: 18px;
+}
+
+.progresso-box p {
+    margin: 8px 0 0;
+    color: white;
+}
+
+.funcionario-container > h3 {
+    color: var(--vinho);
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.receitas-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.receita-menu {
+    background-color: white;
+    border: 2px solid var(--rosa-claro);
+    border-radius: 22px;
+    padding: 25px;
+    box-shadow: 0 7px 20px rgba(77, 0, 17, 0.08);
+}
+
+.receita-icone {
+    font-size: 42px;
+}
+
+.receita-menu h2 {
+    color: var(--vinho);
+    margin: 10px 0;
+}
+
+.receita-menu > p {
+    color: var(--marsala);
+}
+
+.receita-menu button {
+    background-color: var(--marsala);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-weight: bold;
+}
+
+.receita-menu button:hover {
+    background-color: var(--vinho);
+}
+
+.receita-menu #statusBrigadeiro,
+.receita-menu #statusBolo,
+.receita-menu #statusCookies,
+.receita-menu #statusSobremesa {
+    font-weight: bold;
+    margin-top: 12px;
 }

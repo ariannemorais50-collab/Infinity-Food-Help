@@ -1,73 +1,206 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" href="estilo.css">
     <title>Bolo de Chocolate - Infinity Food Help</title>
 </head>
 
 <body>
-    <h1>Bolo de Chocolate</h1>
 
-    <p><strong>Tempo de preparo:</strong> 50 minutos</p>
-    <p><strong>Rendimento:</strong> 10 fatias</p>
+    <div class="receita-container">
 
-    <h2>Ingredientes</h2>
+        <button class="voltar" onclick="window.location.href='inicio.html'">
+            ← Voltar
+        </button>
 
-    <ul>
-        <li>2 xícaras de farinha de trigo</li>
-        <li>1 xícara de açúcar</li>
-        <li>1 xícara de chocolate em pó</li>
-        <li>2 ovos</li>
-        <li>1 xícara de leite</li>
-        <li>1/2 xícara de óleo</li>
-        <li>1 colher de sopa de fermento</li>
-    </ul>
+        <div class="receita-card">
 
-    <h2>Modo de preparo</h2>
+            <div class="receita-imagem">
+                <span>IMAGEM</span>
+            </div>
 
-    <ol>
-        <li>Misture os ingredientes secos.</li>
-        <li>Adicione os ovos, o leite e o óleo.</li>
-        <li>Misture até formar uma massa homogênea.</li>
-        <li>Acrescente o fermento e misture delicadamente.</li>
-        <li>Coloque a massa em uma forma untada.</li>
-        <li>Asse até o bolo estar completamente cozido.</li>
-    </ol>
+            <div class="receita-conteudo">
 
-    <br>
+                <h1>Bolo de Chocolate</h1>
 
-    <button onclick="marcarConcluida()">
-        Marcar como concluída
-    </button>
+                <p class="descricao">
+                    Uma receita prática para facilitar o preparo.
+                </p>
 
-    <p id="mensagem"></p>
-<br><br>
+                <div class="informacoes">
 
-<button onclick="window.location.href='inicio.html'">
-    Voltar para receitas
-</button>
-<script>
-let usuarioLogado = localStorage.getItem("usuarioLogado");
+                    <div>
+                        <strong>⏱️ Tempo</strong>
+                        <span>50 minutos</span>
+                    </div>
 
-function marcarConcluida() {
-    localStorage.setItem(
-        "boloConcluido_" + usuarioLogado,
-        "sim"
-    );
+                    <div>
+                        <strong>🍰 Rendimento</strong>
+                        <span>10 fatias</span>
+                    </div>
 
-    document.getElementById("mensagem").innerText =
-        "Receita concluída! ✔️";
-}
+                </div>
 
-window.onload = function() {
-    if (
-        localStorage.getItem(
-            "boloConcluido_" + usuarioLogado
-        ) === "sim"
-    ) {
-        document.getElementById("mensagem").innerText =
-            "Receita concluída! ✔️";
-    }
-};
-</script>
+                <h2>Ingredientes</h2>
+
+                <ul>
+                    <li>2 xícaras de farinha de trigo</li>
+                    <li>1 xícara de açúcar</li>
+                    <li>1 xícara de chocolate em pó</li>
+                    <li>2 ovos</li>
+                    <li>1 xícara de leite</li>
+                    <li>1/2 xícara de óleo</li>
+                    <li>1 colher de sopa de fermento</li>
+                </ul>
+
+            </div>
+
+        </div>
+
+        <div class="preparo-card">
+
+            <h2>Modo de preparo</h2>
+
+            <ol>
+                <li>Misture os ingredientes secos.</li>
+                <li>Adicione os ovos, o leite e o óleo.</li>
+                <li>Misture até formar uma massa homogênea.</li>
+                <li>Acrescente o fermento e misture delicadamente.</li>
+                <li>Coloque a massa em uma forma untada.</li>
+                <li>Asse até o bolo estar completamente cozido.</li>
+            </ol>
+
+        </div>
+
+        <div class="checklist-card">
+
+            <h2>✓ Checklist de preparo</h2>
+
+            <p>Marque cada etapa conforme for concluindo.</p>
+
+            <label>
+                <input type="checkbox">
+                Separar os ingredientes
+            </label>
+
+            <label>
+                <input type="checkbox">
+                Misturar os ingredientes secos
+            </label>
+
+            <label>
+                <input type="checkbox">
+                Adicionar os ingredientes líquidos
+            </label>
+
+            <label>
+                <input type="checkbox">
+                Misturar a massa
+            </label>
+
+            <label>
+                <input type="checkbox">
+                Acrescentar o fermento
+            </label>
+
+            <label>
+                <input type="checkbox">
+                Colocar na forma e assar
+            </label>
+
+        </div>
+
+        <p class="progresso-checklist">
+            Progresso: 0 de 6 etapas concluídas
+        </p>
+
+        <button class="concluir" onclick="marcarConcluida()">
+            Marcar receita como concluída
+        </button>
+
+        <p id="mensagem"></p>
+
+    </div>
+
+    <script>
+
+        let usuarioLogado = localStorage.getItem("usuarioLogado");
+
+        const checkboxes = document.querySelectorAll(
+            '.checklist-card input[type="checkbox"]'
+        );
+
+        const progresso = document.querySelector(".progresso-checklist");
+
+        checkboxes.forEach((checkbox, index) => {
+
+            const salvo = localStorage.getItem(
+                "checklistBolo_" + usuarioLogado + "_" + index
+            );
+
+            if (salvo === "sim") {
+                checkbox.checked = true;
+            }
+
+            checkbox.addEventListener("change", function() {
+
+                localStorage.setItem(
+                    "checklistBolo_" + usuarioLogado + "_" + index,
+                    checkbox.checked ? "sim" : "nao"
+                );
+
+                atualizarProgresso();
+
+            });
+
+        });
+
+        function atualizarProgresso() {
+
+            let total = 0;
+
+            checkboxes.forEach(function(checkbox) {
+
+                if (checkbox.checked) {
+                    total++;
+                }
+
+            });
+
+            progresso.innerText =
+                "Progresso: " + total + " de 6 etapas concluídas";
+        }
+
+        function marcarConcluida() {
+
+            localStorage.setItem(
+                "boloConcluido_" + usuarioLogado,
+                "sim"
+            );
+
+            document.getElementById("mensagem").innerText =
+                "Receita concluída! ✔️";
+        }
+
+        window.onload = function() {
+
+            atualizarProgresso();
+
+            if (
+                localStorage.getItem(
+                    "boloConcluido_" + usuarioLogado
+                ) === "sim"
+            ) {
+
+                document.getElementById("mensagem").innerText =
+                    "Receita concluída! ✔️";
+
+            }
+
+        };
+
+    </script>
+
+</body>
 </html>
