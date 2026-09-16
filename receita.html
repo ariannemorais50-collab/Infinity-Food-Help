@@ -164,32 +164,56 @@
                 "Progresso: " + total + " de 6 etapas concluídas";
         }
 
-        function marcarConcluida() {
+  function marcarConcluida() {
 
-            localStorage.setItem(
-                "brigadeiroConcluido_" + usuarioLogado,
-                "sim"
-            );
+    let concluida = localStorage.getItem(
+        "brigadeiroConcluido_" + usuarioLogado
+    );
 
-            document.getElementById("mensagem").innerText =
-                "Receita concluída! ✔️";
-        }
+    if (concluida === "sim") {
 
-        window.onload = function() {
+        localStorage.removeItem(
+            "brigadeiroConcluido_" + usuarioLogado
+        );
 
-            atualizarProgresso();
+        document.getElementById("mensagem").innerText =
+            "Receita desmarcada.";
 
-            if (
-                localStorage.getItem(
-                    "brigadeiroConcluido_" + usuarioLogado
-                ) === "sim"
-            ) {
-                document.getElementById("mensagem").innerText =
-                    "Receita concluída! ✔️";
-            }
+        document.querySelector(".concluir").innerText =
+            "Marcar receita como concluída";
 
-        };
+    } else {
 
+        localStorage.setItem(
+            "brigadeiroConcluido_" + usuarioLogado,
+            "sim"
+        );
+
+        document.getElementById("mensagem").innerText =
+            "Receita concluída! ✔️";
+
+        document.querySelector(".concluir").innerText =
+            "Desmarcar receita concluída";
+    }
+}
+window.onload = function() {
+
+    atualizarProgresso();
+
+    if (
+        localStorage.getItem(
+            "brigadeiroConcluido_" + usuarioLogado
+        ) === "sim"
+    ) {
+
+        document.getElementById("mensagem").innerText =
+            "Receita concluída! ✔️";
+
+        document.querySelector(".concluir").innerText =
+            "Desmarcar receita concluída";
+    }
+
+};
     </script>
 
 </body>
