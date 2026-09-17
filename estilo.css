@@ -541,3 +541,151 @@ body > button:hover {
     font-weight: bold;
     margin-top: 12px;
 }
+/* =========================
+   GERENCIAMENTO DE RECEITAS
+   ========================= */
+
+.gerenciamento-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 50px 25px;
+}
+
+.gerenciamento-container > h1 {
+    font-family: "Lobster", cursive;
+    font-size: 48px;
+    color: var(--vinho);
+    margin: 0 0 8px;
+}
+
+.gerenciamento-container > p {
+    color: var(--marsala);
+    margin-bottom: 30px;
+}
+
+.gerenciamento-card {
+    background-color: white;
+    border: 2px solid var(--rosa-claro);
+    border-radius: 28px;
+    padding: 35px;
+    box-shadow: 0 8px 25px rgba(77, 0, 17, 0.10);
+}
+
+.gerenciamento-card h2 {
+    color: var(--marsala);
+    margin-top: 0;
+}
+
+.gerenciamento-card h3 {
+    color: var(--marsala);
+    margin-top: 30px;
+}
+
+.gerenciamento-card label {
+    display: block;
+    font-weight: bold;
+    color: var(--vinho);
+    margin: 18px 0 8px;
+}
+
+.gerenciamento-card input,
+.gerenciamento-card select {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid var(--rosa-claro);
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: "Montserrat", sans-serif;
+}
+
+.gerenciamento-card input:focus,
+.gerenciamento-card select:focus {
+    outline: none;
+    border-color: var(--marsala);
+}
+
+.campos-duplos {
+    display: flex;
+    gap: 20px;
+}
+
+.campos-duplos > div {
+    flex: 1;
+}
+
+#ingredientes input,
+#etapas input {
+    margin-bottom: 10px;
+}
+
+.gerenciamento-card button {
+    background-color: var(--marsala);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.gerenciamento-card button:hover {
+    background-color: var(--vinho);
+}
+
+.salvar-receita {
+    display: block;
+    width: 100%;
+    margin-top: 35px !important;
+    padding: 16px !important;
+    font-size: 17px;
+}
+
+#mensagem {
+    text-align: center;
+    color: var(--marsala);
+    font-weight: bold;
+    margin-top: 20px;
+}
+/* =========================
+   RECEITAS CADASTRADAS
+   ========================= */
+
+#listaReceitas {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+#listaReceitas > div {
+    background-color: #FFFDFB;
+    border: 2px solid var(--rosa-claro);
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(77, 0, 17, 0.08);
+}
+
+#listaReceitas h3 {
+    color: var(--vinho);
+    margin: 0 0 8px;
+    font-size: 22px;
+}
+
+#listaReceitas p {
+    color: var(--vinho);
+    margin: 7px 0;
+}
+
+#listaReceitas button {
+    background-color: var(--marsala);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#listaReceitas button:hover {
+    background-color: var(--vinho);
+}

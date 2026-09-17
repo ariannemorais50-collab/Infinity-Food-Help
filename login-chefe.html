@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="estilo.css">
+    <title>Login da Chef - Infinity Food Help</title>
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <div class="login-card">
+
+            <h1>Infinity Food Help</h1>
+
+            <h2>Login da Chef 👩‍🍳</h2>
+
+            <label for="usuarioChef">Usuário</label>
+            <input
+                type="text"
+                id="usuarioChef"
+                placeholder="Digite o usuário da Chef"
+            >
+
+            <label for="senhaChef">Senha</label>
+            <input
+                type="password"
+                id="senhaChef"
+                placeholder="Digite a senha"
+            >
+
+            <button onclick="fazerLoginChef()">
+                Entrar
+            </button>
+
+            <button
+                class="botao-cadastro"
+                onclick="window.location.href='login.html'"
+            >
+                Voltar para o login
+            </button>
+
+            <p id="mensagem"></p>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        function fazerLoginChef() {
+
+            let usuario = document.getElementById("usuarioChef").value;
+            let senha = document.getElementById("senhaChef").value;
+
+            if (usuario === "chef" && senha === "1234") {
+
+                localStorage.setItem("chefLogada", "sim");
+
+                window.location.href = "gerenciamento.html";
+
+            } else {
+
+                document.getElementById("mensagem").innerText =
+                    "Usuário ou senha incorretos.";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="estilo.css">
+    <title>Gerenciamento de Receitas - Infinity Food Help</title>
+</head>
+
+<body>
+
+    <div class="gerenciamento-container">
+
+        <h1>Gerenciamento das receitas</h1>
+
+        <p>Cadastre e organize as receitas do Infinity Food Help.</p>
+
+        <div class="gerenciamento-card">
+
+            <h2>Nova receita</h2>
+
+            <label for="nomeReceita">Nome da receita</label>
+            <input type="text" id="nomeReceita" placeholder="Ex: Bolo de Chocolate">
+
+            <label for="descricaoReceita">Descrição</label>
+            <input type="text" id="descricaoReceita" placeholder="Descrição da receita">
+
+            <div class="campos-duplos">
+
+                <div>
+                    <label for="tempoReceita">Tempo</label>
+                    <input type="text" id="tempoReceita" placeholder="Ex: 60 min">
+                </div>
+
+                <div>
+                    <label for="rendimentoReceita">Rendimento</label>
+                    <input type="text" id="rendimentoReceita" placeholder="Ex: 12 porções">
+                </div>
+
+            </div>
+
+            <label for="dificuldadeReceita">Dificuldade</label>
+
+            <select id="dificuldadeReceita">
+                <option value="">Selecione</option>
+                <option value="Fácil">Fácil</option>
+                <option value="Médio">Médio</option>
+                <option value="Difícil">Difícil</option>
+            </select>
+
+            <h3>Ingredientes</h3>
+
+            <div id="ingredientes">
+                <input type="text" class="ingrediente" placeholder="Ex: 250 g de farinha">
+            </div>
+
+            <button type="button" onclick="adicionarIngrediente()">
+                + Adicionar ingrediente
+            </button>
+
+            <h3>Etapas do preparo</h3>
+
+            <div id="etapas">
+                <input type="text" class="etapa" placeholder="Ex: Misturar os ingredientes">
+            </div>
+
+            <button type="button" onclick="adicionarEtapa()">
+                + Adicionar etapa
+            </button>
+
+            <button class="salvar-receita" type="button" onclick="salvarReceita()">
+                SALVAR RECEITA
+            </button>
+
+            <p id="mensagem"></p>
+<h2>Receitas cadastradas</h2>
+
+<div id="listaReceitas"></div>
+        </div>
+
+    </div>
+
+    <script>
+
+        function adicionarIngrediente() {
+
+            let novoIngrediente = document.createElement("input");
+
+            novoIngrediente.type = "text";
+            novoIngrediente.className = "ingrediente";
+            novoIngrediente.placeholder = "Digite um ingrediente";
+
+            document.getElementById("ingredientes").appendChild(novoIngrediente);
+        }
+
+        function adicionarEtapa() {
+
+            let novaEtapa = document.createElement("input");
+
+            novaEtapa.type = "text";
+            novaEtapa.className = "etapa";
+            novaEtapa.placeholder = "Digite uma etapa";
+
+            document.getElementById("etapas").appendChild(novaEtapa);
+        }
+
+function salvarReceita() {
+
+    let nome = document.getElementById("nomeReceita").value;
+    let descricao = document.getElementById("descricaoReceita").value;
+    let tempo = document.getElementById("tempoReceita").value;
+    let rendimento = document.getElementById("rendimentoReceita").value;
+    let dificuldade = document.getElementById("dificuldadeReceita").value;
+
+    let ingredientes = [];
+
+    document.querySelectorAll(".ingrediente").forEach(function(input) {
+        if (input.value !== "") {
+            ingredientes.push(input.value);
+        }
+    });
+
+    let etapas = [];
+
+    document.querySelectorAll(".etapa").forEach(function(input) {
+        if (input.value !== "") {
+            etapas.push(input.value);
+        }
+    });
+
+    let receita = {
+        nome: nome,
+        descricao: descricao,
+        tempo: tempo,
+        rendimento: rendimento,
+        dificuldade: dificuldade,
+        ingredientes: ingredientes,
+        etapas: etapas
+    };
+
+    localStorage.setItem(
+        "receita_" + nome,
+        JSON.stringify(receita)
+    );
+
+    document.getElementById("mensagem").innerText =
+        "Receita salva com sucesso! ✔️";
+
+    mostrarReceitas();
+}
+
+
+function mostrarReceitas() {
+
+    let lista = document.getElementById("listaReceitas");
+
+    lista.innerHTML = "";
+
+    for (let chave in localStorage) {
+
+        if (chave.startsWith("receita_")) {
+
+            let receita = JSON.parse(localStorage.getItem(chave));
+
+            let div = document.createElement("div");
+
+            div.innerHTML =
+                "<h3>" + receita.nome + "</h3>" +
+                "<p>" + receita.descricao + "</p>" +
+                "<p>⏱️ " + receita.tempo +
+                " | 🍰 " + receita.rendimento + "</p>" +
+                "<button onclick=\"excluirReceita('" + chave + "')\">🗑️ Excluir</button>";
+
+            lista.appendChild(div);
+        }
+    }
+}
+function excluirReceita(chave) {
+
+    let confirmar = confirm("Tem certeza que deseja excluir esta receita?");
+
+    if (confirmar) {
+
+        localStorage.removeItem(chave);
+
+        mostrarReceitas();
+
+    }
+}
+mostrarReceitas();
+
+
+    </script>
+
+</body>
+
+</html>
