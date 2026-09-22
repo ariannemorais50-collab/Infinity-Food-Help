@@ -3,7 +3,7 @@
 
 <head>
     <link rel="stylesheet" href="estilo.css">
-    <title>Gerenciamento de Receitas - Infinity Food Help</title>
+    <title>Cadastrar Receitas - Infinity Food Help</title>
 </head>
 
 <body>
@@ -11,7 +11,7 @@
     <div class="gerenciamento-container">
 
         <h1>Gerenciamento das receitas</h1>
-
+<button onclick="sairChef()">Sair</button>
         <p>Cadastre e organize as receitas do Infinity Food Help.</p>
 
         <div class="gerenciamento-card">
@@ -80,7 +80,9 @@
     </div>
 
     <script>
-
+if (localStorage.getItem("chefLogada") !== "sim") {
+    window.location.href = "login-chef.html";
+}
         function adicionarIngrediente() {
 
             let novoIngrediente = document.createElement("input");
@@ -137,10 +139,24 @@ function salvarReceita() {
         etapas: etapas
     };
 
+  let receitaEditando = localStorage.getItem("receitaEditando");
+
+if (receitaEditando) {
+
+    localStorage.setItem(
+        receitaEditando,
+        JSON.stringify(receita)
+    );
+
+    localStorage.removeItem("receitaEditando");
+
+} else {
+
     localStorage.setItem(
         "receita_" + nome,
         JSON.stringify(receita)
     );
+}
 
     document.getElementById("mensagem").innerText =
         "Receita salva com sucesso! ✔️";
@@ -168,11 +184,27 @@ function mostrarReceitas() {
                 "<p>" + receita.descricao + "</p>" +
                 "<p>⏱️ " + receita.tempo +
                 " | 🍰 " + receita.rendimento + "</p>" +
-                "<button onclick=\"excluirReceita('" + chave + "')\">🗑️ Excluir</button>";
+               "<button onclick=\"editarReceita('" + chave + "')\">✏️ Editar</button>" +
+"<button onclick=\"excluirReceita('" + chave + "')\">🗑️ Excluir</button>";
 
             lista.appendChild(div);
         }
     }
+}
+function editarReceita(chave) {
+
+    localStorage.setItem("receitaEditando", chave);
+
+    let receita = JSON.parse(localStorage.getItem(chave));
+
+    document.getElementById("nomeReceita").value = receita.nome;
+    document.getElementById("descricaoReceita").value = receita.descricao;
+    document.getElementById("tempoReceita").value = receita.tempo;
+    document.getElementById("rendimentoReceita").value = receita.rendimento;
+    document.getElementById("dificuldadeReceita").value = receita.dificuldade;
+
+    document.getElementById("mensagem").innerText =
+        "Receita carregada para edição. ✏️";
 }
 function excluirReceita(chave) {
 
@@ -181,13 +213,16 @@ function excluirReceita(chave) {
     if (confirmar) {
 
         localStorage.removeItem(chave);
-
-        mostrarReceitas();
+mostrarReceitas();
+      
 
     }
 }
+function sairChef() {
+    localStorage.removeItem("chefLogada");
+    window.location.href = "login-chef.html";
+}
 mostrarReceitas();
-
 
     </script>
 
