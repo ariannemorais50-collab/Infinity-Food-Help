@@ -22,15 +22,19 @@
             <label for="senha">Senha</label>
             <input type="password" id="senha" placeholder="Digite sua senha">
 
-  <button onclick="fazerLogin()">
-    Entrar
-</button>
+            <button onclick="fazerLogin()">
+                Entrar
+            </button>
 
-<button class="botao-cadastro" onclick="window.location.href='cadastro.html'">
-    Criar uma conta
-</button>
+            <button class="botao-cadastro" onclick="window.location.href='cadastro.html'">
+                Criar uma conta
+            </button>
 
-<p id="mensagem"></p>
+            <button class="botao-cadastro" onclick="window.location.href='login-chef.html'">
+                Login da Chef 👩‍🍳
+            </button>
+
+            <p id="mensagem"></p>
 
         </div>
 
@@ -43,15 +47,14 @@
             let usuario = document.getElementById("usuario").value;
             let senha = document.getElementById("senha").value;
 
-  let senhaSalva = localStorage.getItem("usuario_" + usuario);
+            let senhaSalva = localStorage.getItem("usuario_" + usuario);
 
-if (
-    (usuario === "ana" && senha === "1234") ||
-    (usuario === "marcos" && senha === "5678") ||
-    (usuario === "maria" && senha === "9012") ||
-    (senhaSalva !== null && senhaSalva === senha)
-)
-            {
+            if (
+                (usuario === "ana" && senha === "1234") ||
+                (usuario === "marcos" && senha === "5678") ||
+                (usuario === "maria" && senha === "9012") ||
+                (senhaSalva !== null && senhaSalva === senha)
+            ) {
 
                 localStorage.setItem("usuarioLogado", usuario);
 
