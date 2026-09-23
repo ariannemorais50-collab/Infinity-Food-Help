@@ -123,7 +123,7 @@ if (localStorage.getItem("chefLogada") !== "sim") {
             document.getElementById("etapas").appendChild(novaEtapa);
         }
 
-function salvarReceita() {
+async function salvarReceita() {
 
     let nome = document.getElementById("nomeReceita").value;
     let descricao = document.getElementById("descricaoReceita").value;
@@ -147,34 +147,32 @@ function salvarReceita() {
         }
     });
 
-    let receita = {
-        nome: nome,
-        descricao: descricao,
-        tempo: tempo,
-        rendimento: rendimento,
-        dificuldade: dificuldade,
-        ingredientes: ingredientes,
-        etapas: etapas
-    };
+    let { data, error } = await supabaseClient
+        .from("receitas")
+        .insert([
+            {
+                nome: nome,
+                descricao: descricao,
+                tempo: tempo,
+                rendimento: rendimento,
+                dificuldade: dificuldade,
+                ingredientes: ingredientes,
+                etapas: etapas
+            }
+        ])
+        .select();
 
-  let receitaEditando = localStorage.getItem("receitaEditando");
+    if (error) {
 
-if (receitaEditando) {
+        console.error("Erro ao salvar receita:", error);
 
-    localStorage.setItem(
-        receitaEditando,
-        JSON.stringify(receita)
-    );
+        document.getElementById("mensagem").innerText =
+            "Erro ao salvar a receita.";
 
-    localStorage.removeItem("receitaEditando");
+        return;
+    }
 
-} else {
-
-    localStorage.setItem(
-        "receita_" + nome,
-        JSON.stringify(receita)
-    );
-}
+    console.log("Receita salva:", data);
 
     document.getElementById("mensagem").innerText =
         "Receita salva com sucesso! ✔️";
