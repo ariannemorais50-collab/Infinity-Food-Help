@@ -88,7 +88,12 @@ const supabaseClient = supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
-
+supabaseClient
+    .from("receitas")
+    .select("*")
+    .then(function(resultado) {
+        console.log("Teste da tabela receitas:", resultado);
+    });
 </script>
 console.log("Conexão com Supabase criada:", supabaseClient);
     <script>
