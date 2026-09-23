@@ -180,65 +180,44 @@ async function salvarReceita() {
     mostrarReceitas();
 }
 
-
-function mostrarReceitas() {
+async function mostrarReceitas() {
 
     let lista = document.getElementById("listaReceitas");
 
+    lista.innerHTML = "Carregando receitas...";
+
+    let { data, error } = await supabaseClient
+        .from("receitas")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+    if (error) {
+
+        console.error("Erro ao carregar receitas:", error);
+
+        lista.innerHTML = "Erro ao carregar as receitas.";
+
+        return;
+    }
+
     lista.innerHTML = "";
 
-    for (let chave in localStorage) {
+    data.forEach(function(receita) {
 
-        if (chave.startsWith("receita_")) {
+        let div = document.createElement("div");
 
-            let receita = JSON.parse(localStorage.getItem(chave));
+        div.innerHTML =
+            "<h3>" + receita.nome + "</h3>" +
+            "<p>" + receita.descricao + "</p>" +
+            "<p>⏱️ " + receita.tempo +
+            " | 🍰 " + receita.rendimento + "</p>" +
+            "<button onclick=\"editarReceita('" + receita.id + "')\">✏️ Editar</button>" +
+            "<button onclick=\"excluirReceita('" + receita.id + "')\">🗑️ Excluir</button>";
 
-            let div = document.createElement("div");
+        lista.appendChild(div);
 
-            div.innerHTML =
-                "<h3>" + receita.nome + "</h3>" +
-                "<p>" + receita.descricao + "</p>" +
-                "<p>⏱️ " + receita.tempo +
-                " | 🍰 " + receita.rendimento + "</p>" +
-               "<button onclick=\"editarReceita('" + chave + "')\">✏️ Editar</button>" +
-"<button onclick=\"excluirReceita('" + chave + "')\">🗑️ Excluir</button>";
-
-            lista.appendChild(div);
-        }
-    }
+    });
 }
-function editarReceita(chave) {
-
-    localStorage.setItem("receitaEditando", chave);
-
-    let receita = JSON.parse(localStorage.getItem(chave));
-
-    document.getElementById("nomeReceita").value = receita.nome;
-    document.getElementById("descricaoReceita").value = receita.descricao;
-    document.getElementById("tempoReceita").value = receita.tempo;
-    document.getElementById("rendimentoReceita").value = receita.rendimento;
-    document.getElementById("dificuldadeReceita").value = receita.dificuldade;
-
-    document.getElementById("mensagem").innerText =
-        "Receita carregada para edição. ✏️";
-}
-function excluirReceita(chave) {
-
-    let confirmar = confirm("Tem certeza que deseja excluir esta receita?");
-
-    if (confirmar) {
-
-        localStorage.removeItem(chave);
-mostrarReceitas();
-      
-
-    }
-}
-function sairChef() {
-    localStorage.removeItem("chefLogada");
-    window.location.href = "login-chefe.html";
-}
-mostrarReceitas();
 
     </script>
 
