@@ -39,11 +39,13 @@ data.forEach(function(receita) {
    let div = document.createElement("div");
 div.className = "receita-menu";
 
-    div.innerHTML =
-        "<h3>" + receita.nome + "</h3>" +
-        "<p>" + receita.descricao + "</p>" +
-        "<p>⏱️ " + receita.tempo +
-        " | 🍰 " + receita.rendimento + "</p>";
+div.innerHTML =
+    "<div class='receita-icone'>🍰</div>" +
+    "<h2>" + receita.nome + "</h2>" +
+    "<p>" + receita.descricao + "</p>" +
+    "<button>Ver receita</button>" +
+    "<p>⏱️ " + receita.tempo +
+    " | 🍰 " + receita.rendimento + "</p>";
 
     lista.appendChild(div);
 });
