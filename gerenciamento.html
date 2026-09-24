@@ -219,6 +219,30 @@ console.log("mostrarReceitas foi executada");
     });
 }
 mostrarReceitas();
+async function editarReceita(id) {
+
+    let { data: receita, error } = await supabaseClient
+        .from("receitas")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+    if (error) {
+        console.error("Erro ao carregar receita:", error);
+        return;
+    }
+
+    document.getElementById("nomeReceita").value = receita.nome;
+    document.getElementById("descricaoReceita").value = receita.descricao;
+    document.getElementById("tempoReceita").value = receita.tempo;
+    document.getElementById("rendimentoReceita").value = receita.rendimento;
+    document.getElementById("dificuldadeReceita").value = receita.dificuldade;
+
+    localStorage.setItem("receitaEditando", receita.id);
+
+    document.getElementById("mensagem").innerText =
+        "Receita carregada para edição. ✏️";
+}
     </script>
 
 </body>
