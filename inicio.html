@@ -32,7 +32,20 @@ async function carregarReceitas() {
 let lista = document.getElementById("receitasOnline");
 console.log("LISTA:", lista);
 console.log("DADOS:", data);
-lista.innerHTML = "<h2>RECEITAS ONLINE FUNCIONANDO! 🍰</h2>";
+lista.innerHTML = "";
+
+data.forEach(function(receita) {
+
+    let div = document.createElement("div");
+
+    div.innerHTML =
+        "<h3>" + receita.nome + "</h3>" +
+        "<p>" + receita.descricao + "</p>" +
+        "<p>⏱️ " + receita.tempo +
+        " | 🍰 " + receita.rendimento + "</p>";
+
+    lista.appendChild(div);
+});
 
 data.forEach(function(receita) {
 
