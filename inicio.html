@@ -29,7 +29,22 @@ async function carregarReceitas() {
         return;
     }
 
-    console.log("Receitas encontradas:", data);
+let lista = document.getElementById("receitasOnline");
+
+lista.innerHTML = "";
+
+data.forEach(function(receita) {
+
+    let div = document.createElement("div");
+
+    div.innerHTML =
+        "<h3>" + receita.nome + "</h3>" +
+        "<p>" + receita.descricao + "</p>" +
+        "<p>⏱️ " + receita.tempo +
+        " | 🍰 " + receita.rendimento + "</p>";
+
+    lista.appendChild(div);
+});
 }
 
 carregarReceitas();
@@ -113,7 +128,7 @@ carregarReceitas();
         </div>
 
     </div>
-
+<div id="receitasOnline"></div>
     <script>
 
         let usuarioLogado = localStorage.getItem("usuarioLogado");
