@@ -130,7 +130,7 @@ async function salvarReceita() {
     let tempo = document.getElementById("tempoReceita").value;
     let rendimento = document.getElementById("rendimentoReceita").value;
     let dificuldade = document.getElementById("dificuldadeReceita").value;
-
+let receitaEditando = localStorage.getItem("receitaEditando");
     let ingredientes = [];
 
     document.querySelectorAll(".ingrediente").forEach(function(input) {
@@ -147,7 +147,28 @@ async function salvarReceita() {
         }
     });
 
-    let { data, error } = await supabaseClient
+let data;
+let error;
+
+if (receitaEditando) {
+
+    ({ data, error } = await supabaseClient
+        .from("receitas")
+        .update({
+            nome: nome,
+            descricao: descricao,
+            tempo: tempo,
+            rendimento: rendimento,
+            dificuldade: dificuldade,
+            ingredientes: ingredientes,
+            etapas: etapas
+        })
+        .eq("id", receitaEditando)
+        .select());
+
+} else {
+
+    ({ data, error } = await supabaseClient
         .from("receitas")
         .insert([
             {
@@ -160,7 +181,8 @@ async function salvarReceita() {
                 etapas: etapas
             }
         ])
-        .select();
+        .select());
+}
 
     if (error) {
 
@@ -173,7 +195,7 @@ async function salvarReceita() {
     }
 
     console.log("Receita salva:", data);
-
+localStorage.removeItem("receitaEditando");
     document.getElementById("mensagem").innerText =
         "Receita salva com sucesso! ✔️";
 
