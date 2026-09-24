@@ -499,6 +499,9 @@ body > button:hover {
     grid-template-columns: repeat(2, 1fr);
     gap: 25px;
 }
+#receitasOnline {
+    margin-top: 20px;
+}
 
 .receita-menu {
     background-color: white;
