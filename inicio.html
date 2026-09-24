@@ -49,7 +49,8 @@ data.forEach(function(receita) {
 
 data.forEach(function(receita) {
 
-    let div = document.createElement("div");
+   let div = document.createElement("div");
+div.className = "receita-online-card";
 
     div.innerHTML =
         "<h3>" + receita.nome + "</h3>" +
@@ -142,7 +143,7 @@ carregarReceitas();
         </div>
 
     </div>
-<div id="receitasOnline"></div>
+<div id="receitasOnline" class="receitas-online"></div>
     <script>
 
         let usuarioLogado = localStorage.getItem("usuarioLogado");
