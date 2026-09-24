@@ -43,7 +43,7 @@ div.innerHTML =
     "<div class='receita-icone'>🍰</div>" +
     "<h2>" + receita.nome + "</h2>" +
     "<p>" + receita.descricao + "</p>" +
-    "<button>Ver receita</button>" +
+   "<button onclick=\"window.location.href='receita-online.html?id=" + receita.id + "'\">Ver receita</button>" +
     "<p>⏱️ " + receita.tempo +
     " | 🍰 " + receita.rendimento + "</p>";
 
@@ -129,11 +129,11 @@ carregarReceitas();
                 <p id="statusSobremesa"></p>
             </div>
 
-        </div>    </div>
+        </div>
 
-    <div id="receitasOnline" class="receitas-grid"></div>
+        <div id="receitasOnline" class="receitas-grid"></div>
 
-</div>
+    </div>
     <script>
 
         let usuarioLogado = localStorage.getItem("usuarioLogado");

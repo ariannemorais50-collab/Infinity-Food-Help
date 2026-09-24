@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="estilo.css">
+    <title>Receita - Infinity Food Help</title>
+</head>
+
+<body>
+
+    <div class="funcionario-container">
+
+        <div class="funcionario-topo">
+            <h1>Infinity Food Help</h1>
+
+            <button class="botao-sair" onclick="window.history.back()">
+                Voltar
+            </button>
+        </div>
+
+        <div id="receita"></div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+
+        const SUPABASE_URL = "https://psyqlxopvbzqurwecgxf.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_UB8Lgo_gYB2JW0YkuHhW2Q_HD6WkR_b";
+
+        const supabaseClient = supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+        async function carregarReceita() {
+
+            const parametros = new URLSearchParams(window.location.search);
+            const id = parametros.get("id");
+
+            let { data: receita, error } = await supabaseClient
+                .from("receitas")
+                .select("*")
+                .eq("id", id)
+                .single();
+
+            if (error) {
+                console.error("Erro ao carregar receita:", error);
+                document.getElementById("receita").innerHTML =
+                    "<p>Erro ao carregar a receita.</p>";
+                return;
+            }
+
+            let ingredientes = "";
+
+            receita.ingredientes.forEach(function(ingrediente) {
+                ingredientes += "<li>" + ingrediente + "</li>";
+            });
+
+            let etapas = "";
+
+            receita.etapas.forEach(function(etapa) {
+                etapas += "<li>" + etapa + "</li>";
+            });
+
+            document.getElementById("receita").innerHTML =
+                "<h2>" + receita.nome + "</h2>" +
+                "<p>" + receita.descricao + "</p>" +
+                "<p>⏱️ " + receita.tempo + "</p>" +
+                "<p>🍰 " + receita.rendimento + "</p>" +
+                "<p>📊 Dificuldade: " + receita.dificuldade + "</p>" +
+
+                "<h3>Ingredientes</h3>" +
+                "<ul>" + ingredientes + "</ul>" +
+
+                "<h3>Modo de preparo</h3>" +
+                "<ol>" + etapas + "</ol>";
+        }
+
+        carregarReceita();
+
+    </script>
+
+</body>
+
+</html>
