@@ -5,7 +5,35 @@
     <link rel="stylesheet" href="estilo.css">
     <title>Área do Funcionário - Infinity Food Help</title>
 </head>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
+const SUPABASE_URL = "https://psyqlxopvbzqurwecgxf.supabase.co";
+const SUPABASE_KEY = "sb_publishable_UB8Lgo_gYB2JW0YkuHhW2Q_HD6WkR_b";
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+</script>
+<script>
+async function carregarReceitas() {
+
+    let { data, error } = await supabaseClient
+        .from("receitas")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+    if (error) {
+        console.error("Erro ao carregar receitas:", error);
+        return;
+    }
+
+    console.log("Receitas encontradas:", data);
+}
+
+carregarReceitas();
+</script>
 <body>
 
     <div class="funcionario-container">
