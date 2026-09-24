@@ -278,22 +278,52 @@ body > button:hover {
 
 .checklist-card h2 {
     color: white;
+    margin-top: 0;
+    margin-bottom: 10px;
 }
 
 .checklist-card p {
     color: white;
+    margin-top: 8px;
 }
-
+.checklist-card #progresso {
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
 .checklist-card label {
     display: block;
     background-color: white;
-    padding: 15px;
+    padding: 15px 18px;
     margin: 10px 0;
-    border-radius: 12px;
+    border-radius: 14px;
     cursor: pointer;
     color: var(--vinho);
+    font-weight: 500;
 }
-
+.botao-concluir {
+    display: block;
+    margin: 18px auto;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--vinho);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+#mensagemConclusao {
+    text-align: center;
+    color: var(--marsala);
+    font-weight: bold;
+    margin-top: 10px;
+}
+#progresso {
+    text-align: center;
+    color: var(--marsala);
+    font-weight: bold;
+    margin-top: 20px;
+}
 .checklist-card input {
     margin-right: 10px;
     accent-color: var(--marsala);
@@ -715,4 +745,8 @@ body > button:hover {
 .receita-online-card p {
     color: #555;
     margin: 8px 0;
+}
+
+.receita-detalhes {
+    max-width: 1050px;
 }

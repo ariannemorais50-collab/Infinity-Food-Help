@@ -23,7 +23,8 @@
 
             <label for="descricaoReceita">Descrição</label>
             <input type="text" id="descricaoReceita" placeholder="Descrição da receita">
-
+<label for="nutricionalReceita">Informações nutricionais</label>
+<textarea id="nutricionalReceita" placeholder="Ex: Porção: 100g | Calorias: 250 kcal | Carboidratos: 30g | Proteínas: 5g | Gorduras: 10g"></textarea>
             <div class="campos-duplos">
 
                 <div>
@@ -130,6 +131,7 @@ async function salvarReceita() {
     let tempo = document.getElementById("tempoReceita").value;
     let rendimento = document.getElementById("rendimentoReceita").value;
     let dificuldade = document.getElementById("dificuldadeReceita").value;
+    let informacoesNutricionais = document.getElementById("nutricionalReceita").value;
 let receitaEditando = localStorage.getItem("receitaEditando");
     let ingredientes = [];
 
@@ -159,8 +161,9 @@ if (receitaEditando) {
             descricao: descricao,
             tempo: tempo,
             rendimento: rendimento,
-            dificuldade: dificuldade,
-            ingredientes: ingredientes,
+dificuldade: dificuldade,
+informacoes_nutricionais: informacoesNutricionais,
+ingredientes: ingredientes,
             etapas: etapas
         })
         .eq("id", receitaEditando)
@@ -176,8 +179,9 @@ if (receitaEditando) {
                 descricao: descricao,
                 tempo: tempo,
                 rendimento: rendimento,
-                dificuldade: dificuldade,
-                ingredientes: ingredientes,
+dificuldade: dificuldade,
+informacoes_nutricionais: informacoesNutricionais,
+ingredientes: ingredientes,
                 etapas: etapas
             }
         ])
@@ -259,7 +263,7 @@ async function editarReceita(id) {
     document.getElementById("tempoReceita").value = receita.tempo;
     document.getElementById("rendimentoReceita").value = receita.rendimento;
     document.getElementById("dificuldadeReceita").value = receita.dificuldade;
-
+document.getElementById("nutricionalReceita").value = receita.informacoes_nutricionais || "";
     localStorage.setItem("receitaEditando", receita.id);
 
     document.getElementById("mensagem").innerText =
