@@ -36,19 +36,6 @@ lista.innerHTML = "";
 
 data.forEach(function(receita) {
 
-    let div = document.createElement("div");
-
-    div.innerHTML =
-        "<h3>" + receita.nome + "</h3>" +
-        "<p>" + receita.descricao + "</p>" +
-        "<p>⏱️ " + receita.tempo +
-        " | 🍰 " + receita.rendimento + "</p>";
-
-    lista.appendChild(div);
-});
-
-data.forEach(function(receita) {
-
    let div = document.createElement("div");
 div.className = "receita-online-card";
 
@@ -143,7 +130,7 @@ carregarReceitas();
         </div>
 
     </div>
-<div id="receitasOnline" class="receitas-online"></div>
+<div id="receitasOnline" class="receitas-grid"></div>
     <script>
 
         let usuarioLogado = localStorage.getItem("usuarioLogado");
