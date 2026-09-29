@@ -525,20 +525,85 @@
 
         }
 
+function abrirConfirmacaoExclusao(id) {
 
+    let modal = document.createElement("div");
+
+    modal.className = "modal-exclusao";
+
+    modal.innerHTML = `
+        <div class="modal-exclusao-card">
+
+            <div class="modal-icone">🗑️</div>
+
+            <h2>Excluir receita?</h2>
+
+            <p>
+                Tem certeza que deseja excluir esta receita?
+                <br>
+                Essa ação não poderá ser desfeita.
+            </p>
+
+            <div class="modal-botoes">
+
+                <button class="botao-cancelar"
+                    onclick="this.closest('.modal-exclusao').remove()">
+                    Cancelar
+                </button>
+
+                <button class="botao-excluir"
+                    onclick="confirmarExclusao('${id}', this)">
+                    Excluir receita
+                </button>
+
+            </div>
+
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+}
+
+
+async function confirmarExclusao(id, botao) {
+
+    botao.innerText = "Excluindo...";
+    botao.disabled = true;
+
+    let { error } =
+        await supabaseClient
+            .from("receitas")
+            .delete()
+            .eq("id", id);
+
+    if (error) {
+
+        console.error(
+            "Erro ao excluir receita:",
+            error
+        );
+
+        document.getElementById("mensagem").innerText =
+            "Erro ao excluir a receita.";
+
+        botao.closest(".modal-exclusao").remove();
+
+        return;
+    }
+
+    botao.closest(".modal-exclusao").remove();
+
+    document.getElementById("mensagem").innerText =
+        "Receita excluída com sucesso! 🗑️";
+
+    mostrarReceitas();
+}
         // Excluir receita
 
         async function excluirReceita(id) {
 
-            let confirmar =
-                confirm(
-                    "Tem certeza que deseja excluir esta receita?"
-                );
-
-
-            if (!confirmar) {
-                return;
-            }
+            abrirConfirmacaoExclusao(id);
+return;
 
 
             let { error } =
