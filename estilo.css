@@ -328,7 +328,34 @@ body > button:hover {
     margin-right: 10px;
     accent-color: var(--marsala);
 }
+/* =========================
+   CHECKLIST DE INGREDIENTES
+   ========================= */
 
+.checklist-ingredientes {
+    margin-top: 15px;
+}
+
+.checklist-ingredientes label {
+    display: block;
+    background-color: #FFFDFB;
+    border: 2px solid var(--rosa-claro);
+    padding: 14px 18px;
+    margin: 10px 0;
+    border-radius: 14px;
+    cursor: pointer;
+    color: var(--vinho);
+    font-weight: 500;
+}
+
+.checklist-ingredientes label:hover {
+    border-color: var(--marsala);
+}
+
+.checklist-ingredientes input {
+    margin-right: 10px;
+    accent-color: var(--marsala);
+}
 .progresso-checklist {
     text-align: center;
     font-weight: bold;
@@ -749,4 +776,77 @@ body > button:hover {
 
 .receita-detalhes {
     max-width: 1050px;
+}
+.lista-receitas .receita-conteudo button {
+    display: block;
+    margin: 20px auto 0;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--vinho);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.lista-receitas .receita-conteudo button:hover {
+    background-color: var(--marsala);
+}
+.titulo-com-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.titulo-com-logo img {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.titulo-com-logo h1 {
+    margin: 0;
+}
+.botao-voltar {
+    background-color: transparent;
+    color: var(--marsala);
+    border: 2px solid var(--marsala);
+    margin-top: 15px;
+}
+
+.botao-voltar:hover {
+    background-color: var(--marsala);
+    color: white;
+}
+/* =========================
+   VOLTAR - TELA DE LOGIN
+   ========================= */
+
+.login-container {
+    position: relative;
+}
+
+.login-voltar {
+    position: absolute;
+    top: 28px;
+    left: 35px;
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 10px;
+}
+
+.login-voltar:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+@keyframes cairConfete {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
 }

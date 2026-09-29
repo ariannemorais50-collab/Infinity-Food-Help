@@ -5,191 +5,368 @@
     <link rel="stylesheet" href="estilo.css">
     <title>Área do Funcionário - Infinity Food Help</title>
 </head>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
-const SUPABASE_URL = "https://psyqlxopvbzqurwecgxf.supabase.co";
-const SUPABASE_KEY = "sb_publishable_UB8Lgo_gYB2JW0YkuHhW2Q_HD6WkR_b";
-
-const supabaseClient = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
-</script>
-<script>
-async function carregarReceitas() {
-
-    let { data, error } = await supabaseClient
-        .from("receitas")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-    if (error) {
-        console.error("Erro ao carregar receitas:", error);
-        return;
-    }
-
-let lista = document.getElementById("receitasOnline");
-console.log("LISTA:", lista);
-console.log("DADOS:", data);
-lista.innerHTML = "";
-
-data.forEach(function(receita) {
-
-   let div = document.createElement("div");
-div.className = "receita-menu";
-
-div.innerHTML =
-    "<div class='receita-icone'>🍰</div>" +
-    "<h2>" + receita.nome + "</h2>" +
-    "<p>" + receita.descricao + "</p>" +
-   "<button onclick=\"window.location.href='receita-online.html?id=" + receita.id + "'\">Ver receita</button>" +
-    "<p>⏱️ " + receita.tempo +
-    " | 🍰 " + receita.rendimento + "</p>";
-
-    lista.appendChild(div);
-});
-}
-
-carregarReceitas();
-</script>
 <body>
 
-    <div class="funcionario-container">
+<div class="funcionario-container">
 
-        <div class="funcionario-topo">
+    <div class="funcionario-topo">
 
-            <div>
-                <h1>Infinity Food Help</h1>
-                <p id="boasVindas"></p>
+        <div>
+<div class="titulo-com-logo">
+    <img src="logo.png" alt="Logo Infinity Food Help">
+    <h1>Infinity Food Help</h1>
+</div>
+            <p id="boasVindas"></p>
+        </div>
+
+        <button class="botao-sair" onclick="sair()">
+            Sair
+        </button>
+
+    </div>
+
+
+    <div class="funcionario-intro">
+
+        <h2>Área do funcionário</h2>
+
+        <p>
+            Escolha uma categoria para encontrar a receita que deseja aprender.
+        </p>
+
+        <div class="progresso-box">
+
+            <strong>📊 Seu progresso</strong>
+
+            <p id="progresso">
+                0 receitas concluídas
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <h3>Escolha uma categoria</h3>
+
+
+    <div class="receitas-grid">
+
+
+        <!-- BOLOS -->
+
+        <div class="receita-menu">
+
+            <div class="receita-icone">
+                🍰
             </div>
 
-            <button class="botao-sair" onclick="sair()">
-                Sair
+            <h2>Bolos</h2>
+
+            <p>
+                Confira nossas receitas de bolos.
+            </p>
+
+            <button onclick="window.location.href='bolo.html'">
+                Ver receitas
             </button>
 
         </div>
 
-        <div class="funcionario-intro">
 
-            <h2>Área do funcionário</h2>
+        <!-- BROWNIES -->
+
+        <div class="receita-menu">
+
+            <div class="receita-icone">
+                🍫
+            </div>
+
+            <h2>Brownies</h2>
 
             <p>
-                Escolha uma receita para aprender o passo a passo.
+                Aprenda a preparar nossos brownies.
             </p>
 
-            <div class="progresso-box">
-                <strong>📊 Seu progresso</strong>
-                <p id="progresso"></p>
-            </div>
+            <button onclick="window.location.href='brownies.html'">
+                Ver receitas
+            </button>
 
         </div>
 
-        <h3>Receitas disponíveis</h3>
 
-        <div class="receitas-grid">
+        <!-- BRIGADEIROS -->
 
-            <div class="receita-menu">
-                <div class="receita-icone">🍫</div>
-                <h2>Chocolates</h2>
-                <p>Aprenda o preparo dos nossos chocolates.</p>
-                <button onclick="window.location.href='receita.html'">
-                    Ver receita
-                </button>
-                <p id="statusBrigadeiro"></p>
+        <div class="receita-menu">
+
+            <div class="receita-icone">
+                🍬
             </div>
 
-            <div class="receita-menu">
-                <div class="receita-icone">🎂</div>
-                <h2>Bolos</h2>
-                <p>Confira o passo a passo dos nossos bolos.</p>
-                <button onclick="window.location.href='bolo.html'">
-                    Ver receita
-                </button>
-                <p id="statusBolo"></p>
-            </div>
+            <h2>Brigadeiros</h2>
 
-            <div class="receita-menu">
-                <div class="receita-icone">🍪</div>
-                <h2>Cookies</h2>
-                <p>Aprenda a preparar nossos cookies.</p>
-                <button onclick="window.location.href='cookies.html'">
-                    Ver receita
-                </button>
-                <p id="statusCookies"></p>
-            </div>
+            <p>
+                Confira nossas receitas de brigadeiros.
+            </p>
 
-            <div class="receita-menu">
-                <div class="receita-icone">🍰</div>
-                <h2>Sobremesas</h2>
-                <p>Confira nossas receitas de sobremesas.</p>
-                <button onclick="window.location.href='sobremesa.html'">
-                    Ver receita
-                </button>
-                <p id="statusSobremesa"></p>
-            </div>
+            <button onclick="window.location.href='receita.html'">
+                Ver receitas
+            </button>
 
         </div>
 
-        <div id="receitasOnline" class="receitas-grid"></div>
 
     </div>
-    <script>
 
-        let usuarioLogado = localStorage.getItem("usuarioLogado");
 
- let nomeFuncionario =
-    localStorage.getItem("nome_" + usuarioLogado) || usuarioLogado;
+    <!-- RECEITAS CADASTRADAS PELO CHEF -->
 
-document.getElementById("boasVindas").innerText =
-    "Bem-vindo(a), " + nomeFuncionario + "!";
-        if (localStorage.getItem("brigadeiroConcluido_" + usuarioLogado) === "sim") {
-            document.getElementById("statusBrigadeiro").innerText =
-                "✅ Concluído";
+    <h3 style="margin-top: 45px;">
+        Novas receitas
+    </h3>
+
+    <div
+        id="receitasOnline"
+        class="receitas-grid">
+    </div>
+
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+    "https://psyqlxopvbzqurwecgxf.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_UB8Lgo_gYB2JW0YkuHhW2Q_HD6WkR_b";
+
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+// =========================
+// LOGIN DO FUNCIONÁRIO
+// =========================
+
+let usuarioLogado =
+    localStorage.getItem("usuarioLogado");
+
+
+if (!usuarioLogado) {
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+// Nome do funcionário
+
+let nomeFuncionario =
+    localStorage.getItem(
+        "nome_" + usuarioLogado
+    ) || usuarioLogado;
+
+
+document.getElementById(
+    "boasVindas"
+).innerText =
+    "Bem-vindo(a), " +
+    nomeFuncionario +
+    "!";
+
+
+// =========================
+// CARREGAR RECEITAS DO CHEF
+// =========================
+
+async function carregarReceitas() {
+
+    const lista =
+        document.getElementById(
+            "receitasOnline"
+        );
+
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+
+        .from("receitas")
+
+        .select("*")
+
+        .order(
+            "created_at",
+            {
+                ascending: false
+            }
+        );
+
+
+    if (error) {
+
+        console.error(
+            "Erro ao carregar receitas:",
+            error
+        );
+
+        lista.innerHTML =
+            "<p>Erro ao carregar as receitas.</p>";
+
+        return;
+    }
+
+
+    lista.innerHTML = "";
+
+
+    if (!data || data.length === 0) {
+
+        lista.innerHTML =
+            "<p>Nenhuma receita nova cadastrada ainda.</p>";
+
+        return;
+    }
+
+
+    data.forEach(
+        function(receita) {
+
+            let div =
+                document.createElement("div");
+
+
+            div.className =
+                "receita-menu";
+
+
+            div.innerHTML =
+
+                "<div class='receita-icone'>🍰</div>" +
+
+                "<h2>" +
+                    receita.nome +
+                "</h2>" +
+
+                "<p>" +
+                    receita.descricao +
+                "</p>" +
+
+                "<button onclick=\"window.location.href='receita-online.html?id=" +
+                    receita.id +
+                "'\">" +
+
+                    "Ver receita" +
+
+                "</button>" +
+
+                "<p>" +
+
+                    "⏱️ " +
+                    receita.tempo +
+
+                    " | 🍰 " +
+                    receita.rendimento +
+
+                "</p>";
+
+
+            lista.appendChild(div);
+
         }
+    );
 
-        if (localStorage.getItem("boloConcluido_" + usuarioLogado) === "sim") {
-            document.getElementById("statusBolo").innerText =
-                "✅ Concluído";
-        }
+}
 
-        if (localStorage.getItem("cookiesConcluido_" + usuarioLogado) === "sim") {
-            document.getElementById("statusCookies").innerText =
-                "✅ Concluído";
-        }
 
-        if (localStorage.getItem("sobremesaConcluido_" + usuarioLogado) === "sim") {
-            document.getElementById("statusSobremesa").innerText =
-                "✅ Concluído";
-        }
+// =========================
+// PROGRESSO
+// =========================
 
-        let totalConcluidas = 0;
+function atualizarProgresso() {
 
-        if (localStorage.getItem("brigadeiroConcluido_" + usuarioLogado) === "sim") {
-            totalConcluidas++;
-        }
+    let totalConcluidas = 0;
 
-        if (localStorage.getItem("boloConcluido_" + usuarioLogado) === "sim") {
-            totalConcluidas++;
-        }
 
-        if (localStorage.getItem("cookiesConcluido_" + usuarioLogado) === "sim") {
-            totalConcluidas++;
-        }
+    if (
+        localStorage.getItem(
+            "brigadeiroConcluido_" +
+            usuarioLogado
+        ) === "sim"
+    ) {
 
-        if (localStorage.getItem("sobremesaConcluido_" + usuarioLogado) === "sim") {
-            totalConcluidas++;
-        }
+        totalConcluidas++;
 
-        document.getElementById("progresso").innerText =
-            totalConcluidas + " de 4 receitas concluídas";
+    }
 
-        function sair() {
-            localStorage.removeItem("usuarioLogado");
-            window.location.href = "login.html";
-        }
 
-    </script>
+    if (
+        localStorage.getItem(
+            "boloConcluido_" +
+            usuarioLogado
+        ) === "sim"
+    ) {
+
+        totalConcluidas++;
+
+    }
+
+
+    if (
+        localStorage.getItem(
+            "brownieConcluido_" +
+            usuarioLogado
+        ) === "sim"
+    ) {
+
+        totalConcluidas++;
+
+    }
+
+
+    document.getElementById(
+        "progresso"
+    ).innerText =
+
+        totalConcluidas +
+        " receitas concluídas";
+
+}
+
+
+// =========================
+// SAIR
+// =========================
+
+function sair() {
+
+    localStorage.removeItem(
+        "usuarioLogado"
+    );
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+carregarReceitas();
+
+atualizarProgresso();
+
+</script>
 
 </body>
+
 </html>

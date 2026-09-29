@@ -3,20 +3,18 @@
 
 <head>
     <link rel="stylesheet" href="estilo.css">
-    <title>Bolos - Infinity Food Help</title>
+    <title>Brownies - Infinity Food Help</title>
 </head>
 
 <body>
 
     <div class="receita-container">
 
-<button class="voltar" onclick="window.location.href='inicio.html'">
-    ← Voltar
-</button>
+        <button class="voltar" onclick="window.location.href='inicio.html'">
             ← Voltar
         </button>
 
-        <h1 style="text-align: center;">🍰 Bolos</h1>
+        <h1 style="text-align: center;">🍫 Brownies</h1>
 
         <div class="lista-receitas" id="listaReceitas">
 
@@ -46,9 +44,9 @@
         );
 
 
-        // Carregar somente receitas da categoria Bolos
+        // Carregar somente receitas da categoria Brownies
 
-        async function carregarBolos() {
+        async function carregarBrownies() {
 
             const lista =
                 document.getElementById("listaReceitas");
@@ -58,7 +56,7 @@
                 await supabaseClient
                     .from("receitas")
                     .select("*")
-                    .eq("categoria", "Bolos")
+                    .eq("categoria", "Brownies")
                     .order("created_at", {
                         ascending: false
                     });
@@ -67,7 +65,7 @@
             if (error) {
 
                 console.error(
-                    "Erro ao carregar bolos:",
+                    "Erro ao carregar brownies:",
                     error
                 );
 
@@ -84,7 +82,7 @@
             if (!data || data.length === 0) {
 
                 lista.innerHTML =
-                    "<p>Nenhuma receita de bolo cadastrada ainda.</p>";
+                    "<p>Nenhuma receita de brownie cadastrada ainda.</p>";
 
                 return;
             }
@@ -97,7 +95,7 @@
                     "<div class='receita-card'>" +
 
                         "<div class='receita-imagem'>" +
-                            "🍰" +
+                            "🍫" +
                         "</div>" +
 
                         "<div class='receita-conteudo'>" +
@@ -126,7 +124,7 @@
         }
 
 
-        carregarBolos();
+        carregarBrownies();
 
     </script>
 

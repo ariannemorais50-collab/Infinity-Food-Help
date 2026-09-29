@@ -11,7 +11,9 @@
     <div class="gerenciamento-container">
 
         <h1>Cadastrar receitas</h1>
-<button onclick="sairChef()">Sair</button>
+
+        <button onclick="sairChef()">Sair</button>
+
         <p>Cadastre e organize as receitas do Infinity Food Help.</p>
 
         <div class="gerenciamento-card">
@@ -23,8 +25,11 @@
 
             <label for="descricaoReceita">Descrição</label>
             <input type="text" id="descricaoReceita" placeholder="Descrição da receita">
-<label for="nutricionalReceita">Informações nutricionais</label>
-<textarea id="nutricionalReceita" placeholder="Ex: Porção: 100g | Calorias: 250 kcal | Carboidratos: 30g | Proteínas: 5g | Gorduras: 10g"></textarea>
+
+            <label for="nutricionalReceita">Informações nutricionais</label>
+            <textarea id="nutricionalReceita"
+                placeholder="Ex: Porção: 100g | Calorias: 250 kcal | Carboidratos: 30g | Proteínas: 5g | Gorduras: 10g"></textarea>
+
             <div class="campos-duplos">
 
                 <div>
@@ -46,6 +51,14 @@
                 <option value="Fácil">Fácil</option>
                 <option value="Médio">Médio</option>
                 <option value="Difícil">Difícil</option>
+            </select>
+
+            <label for="categoriaReceita">Categoria</label>
+
+            <select id="categoriaReceita">
+                <option value="Bolos">🍰 Bolos</option>
+                <option value="Brownies">🍫 Brownies</option>
+                <option value="Brigadeiros">🍬 Brigadeiros</option>
             </select>
 
             <h3>Ingredientes</h3>
@@ -73,35 +86,49 @@
             </button>
 
             <p id="mensagem"></p>
-<h2>Receitas cadastradas</h2>
 
-<div id="listaReceitas"></div>
+            <h2>Receitas cadastradas</h2>
+
+            <div id="listaReceitas"></div>
+
         </div>
 
     </div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
 
-const SUPABASE_URL = "https://psyqlxopvbzqurwecgxf.supabase.co";
-const SUPABASE_KEY = "sb_publishable_UB8Lgo_gYB2JW0YkuHhW2Q_HD6WkR_b";
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-const supabaseClient = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
-supabaseClient
-    .from("receitas")
-    .select("*")
-    .then(function(resultado) {
-        console.log("Teste da tabela receitas:", resultado);
-    });
-</script>
-console.log("Conexão com Supabase criada:", supabaseClient);
     <script>
-        console.log("Supabase carregado:", supabase);
-if (localStorage.getItem("chefLogada") !== "sim") {
-    window.location.href = "login-chefe.html";
-}
+
+        const SUPABASE_URL = "https://psyqlxopvbzqurwecgxf.supabase.co";
+
+        const SUPABASE_KEY =
+            "sb_publishable_UB8Lgo_gYB2JW0YkuHhW2Q_HD6WkR_b";
+
+        const supabaseClient = supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+
+        // Verifica se a Chef está logada
+
+        if (localStorage.getItem("chefLogada") !== "sim") {
+            window.location.href = "login-chefe.html";
+        }
+
+
+        // Sair da conta da Chef
+
+        function sairChef() {
+
+            localStorage.removeItem("chefLogada");
+
+            window.location.href = "login-chefe.html";
+        }
+
+
+        // Adicionar ingrediente
+
         function adicionarIngrediente() {
 
             let novoIngrediente = document.createElement("input");
@@ -110,8 +137,12 @@ if (localStorage.getItem("chefLogada") !== "sim") {
             novoIngrediente.className = "ingrediente";
             novoIngrediente.placeholder = "Digite um ingrediente";
 
-            document.getElementById("ingredientes").appendChild(novoIngrediente);
+            document.getElementById("ingredientes")
+                .appendChild(novoIngrediente);
         }
+
+
+        // Adicionar etapa
 
         function adicionarEtapa() {
 
@@ -121,177 +152,432 @@ if (localStorage.getItem("chefLogada") !== "sim") {
             novaEtapa.className = "etapa";
             novaEtapa.placeholder = "Digite uma etapa";
 
-            document.getElementById("etapas").appendChild(novaEtapa);
+            document.getElementById("etapas")
+                .appendChild(novaEtapa);
         }
 
-async function salvarReceita() {
 
-    let nome = document.getElementById("nomeReceita").value;
-    let descricao = document.getElementById("descricaoReceita").value;
-    let tempo = document.getElementById("tempoReceita").value;
-    let rendimento = document.getElementById("rendimentoReceita").value;
-    let dificuldade = document.getElementById("dificuldadeReceita").value;
-    let informacoesNutricionais = document.getElementById("nutricionalReceita").value;
-let receitaEditando = localStorage.getItem("receitaEditando");
-    let ingredientes = [];
+        // Salvar ou editar receita
 
-    document.querySelectorAll(".ingrediente").forEach(function(input) {
-        if (input.value !== "") {
-            ingredientes.push(input.value);
-        }
-    });
+        async function salvarReceita() {
 
-    let etapas = [];
+            let nome =
+                document.getElementById("nomeReceita").value;
 
-    document.querySelectorAll(".etapa").forEach(function(input) {
-        if (input.value !== "") {
-            etapas.push(input.value);
-        }
-    });
+            let descricao =
+                document.getElementById("descricaoReceita").value;
 
-let data;
-let error;
+            let tempo =
+                document.getElementById("tempoReceita").value;
 
-if (receitaEditando) {
+            let rendimento =
+                document.getElementById("rendimentoReceita").value;
 
-    ({ data, error } = await supabaseClient
-        .from("receitas")
-        .update({
-            nome: nome,
-            descricao: descricao,
-            tempo: tempo,
-            rendimento: rendimento,
-dificuldade: dificuldade,
-informacoes_nutricionais: informacoesNutricionais,
-ingredientes: ingredientes,
-            etapas: etapas
-        })
-        .eq("id", receitaEditando)
-        .select());
+            let dificuldade =
+                document.getElementById("dificuldadeReceita").value;
 
-} else {
+            let categoria =
+                document.getElementById("categoriaReceita").value;
 
-    ({ data, error } = await supabaseClient
-        .from("receitas")
-        .insert([
-            {
-                nome: nome,
-                descricao: descricao,
-                tempo: tempo,
-                rendimento: rendimento,
-dificuldade: dificuldade,
-informacoes_nutricionais: informacoesNutricionais,
-ingredientes: ingredientes,
-                etapas: etapas
+            let informacoesNutricionais =
+                document.getElementById("nutricionalReceita").value;
+
+            let receitaEditando =
+                localStorage.getItem("receitaEditando");
+
+
+            // Ingredientes
+
+            let ingredientes = [];
+
+            document.querySelectorAll(".ingrediente").forEach(function(input) {
+
+                if (input.value.trim() !== "") {
+                    ingredientes.push(input.value.trim());
+                }
+
+            });
+
+
+            // Etapas
+
+            let etapas = [];
+
+            document.querySelectorAll(".etapa").forEach(function(input) {
+
+                if (input.value.trim() !== "") {
+                    etapas.push(input.value.trim());
+                }
+
+            });
+
+
+            let data;
+            let error;
+
+
+            // EDITAR RECEITA
+
+            if (receitaEditando) {
+
+                ({ data, error } = await supabaseClient
+                    .from("receitas")
+                    .update({
+
+                        nome: nome,
+                        descricao: descricao,
+                        tempo: tempo,
+                        rendimento: rendimento,
+                        dificuldade: dificuldade,
+                        categoria: categoria,
+                        informacoes_nutricionais: informacoesNutricionais,
+                        ingredientes: ingredientes,
+                        etapas: etapas
+
+                    })
+                    .eq("id", receitaEditando)
+                    .select());
+
             }
-        ])
-        .select());
-}
 
-    if (error) {
 
-        console.error("Erro ao salvar receita:", error);
+            // NOVA RECEITA
 
-        document.getElementById("mensagem").innerText =
-            "Erro ao salvar a receita.";
+            else {
 
-        return;
-    }
+                ({ data, error } = await supabaseClient
+                    .from("receitas")
+                    .insert([
+                        {
 
-    console.log("Receita salva:", data);
-localStorage.removeItem("receitaEditando");
-    document.getElementById("mensagem").innerText =
-        "Receita salva com sucesso! ✔️";
+                            nome: nome,
+                            descricao: descricao,
+                            tempo: tempo,
+                            rendimento: rendimento,
+                            dificuldade: dificuldade,
+                            categoria: categoria,
+                            informacoes_nutricionais: informacoesNutricionais,
+                            ingredientes: ingredientes,
+                            etapas: etapas
 
-    mostrarReceitas();
-}
+                        }
+                    ])
+                    .select());
 
-async function mostrarReceitas() {
-console.log("mostrarReceitas foi executada");
-    let lista = document.getElementById("listaReceitas");
+            }
 
-    lista.innerHTML = "Carregando receitas...";
 
-    let { data, error } = await supabaseClient
-        .from("receitas")
-        .select("*")
-        .order("created_at", { ascending: false });
+            // Erro
 
-    if (error) {
+            if (error) {
 
-        console.error("Erro ao carregar receitas:", error);
+                console.error(
+                    "Erro ao salvar receita:",
+                    error
+                );
 
-        lista.innerHTML = "Erro ao carregar as receitas.";
+                document.getElementById("mensagem").innerText =
+                    "Erro ao salvar a receita.";
 
-        return;
-    }
+                return;
+            }
 
-    lista.innerHTML = "";
 
-    data.forEach(function(receita) {
+            // Sucesso
 
-        let div = document.createElement("div");
+            console.log("Receita salva:", data);
 
-        div.innerHTML =
-            "<h3>" + receita.nome + "</h3>" +
-            "<p>" + receita.descricao + "</p>" +
-            "<p>⏱️ " + receita.tempo +
-            " | 🍰 " + receita.rendimento + "</p>" +
-            "<button onclick=\"editarReceita('" + receita.id + "')\">✏️ Editar</button>" +
-            "<button onclick=\"excluirReceita('" + receita.id + "')\">🗑️ Excluir</button>";
+            localStorage.removeItem("receitaEditando");
 
-        lista.appendChild(div);
+            document.getElementById("mensagem").innerText =
+                "Receita salva com sucesso! ✔️";
 
-    });
-}
-mostrarReceitas();
-async function editarReceita(id) {
 
-    let { data: receita, error } = await supabaseClient
-        .from("receitas")
-        .select("*")
-        .eq("id", id)
-        .single();
+            // Limpa formulário
 
-    if (error) {
-        console.error("Erro ao carregar receita:", error);
-        return;
-    }
+            limparFormulario();
 
-    document.getElementById("nomeReceita").value = receita.nome;
-    document.getElementById("descricaoReceita").value = receita.descricao;
-    document.getElementById("tempoReceita").value = receita.tempo;
-    document.getElementById("rendimentoReceita").value = receita.rendimento;
-    document.getElementById("dificuldadeReceita").value = receita.dificuldade;
-document.getElementById("nutricionalReceita").value = receita.informacoes_nutricionais || "";
-    localStorage.setItem("receitaEditando", receita.id);
+            mostrarReceitas();
 
-    document.getElementById("mensagem").innerText =
-        "Receita carregada para edição. ✏️";
-}
-async function excluirReceita(id) {
+        }
 
-    let confirmar = confirm("Tem certeza que deseja excluir esta receita?");
 
-    if (!confirmar) {
-        return;
-    }
+        // Limpar formulário
 
-    let { error } = await supabaseClient
-        .from("receitas")
-        .delete()
-        .eq("id", id);
+        function limparFormulario() {
 
-    if (error) {
-        console.error("Erro ao excluir receita:", error);
-        return;
-    }
+            document.getElementById("nomeReceita").value = "";
+            document.getElementById("descricaoReceita").value = "";
+            document.getElementById("tempoReceita").value = "";
+            document.getElementById("rendimentoReceita").value = "";
+            document.getElementById("dificuldadeReceita").value = "";
+            document.getElementById("categoriaReceita").value = "Bolos";
+            document.getElementById("nutricionalReceita").value = "";
 
-    document.getElementById("mensagem").innerText =
-        "Receita excluída com sucesso! 🗑️";
 
-    mostrarReceitas();
-}
+            document.getElementById("ingredientes").innerHTML =
+                '<input type="text" class="ingrediente" placeholder="Ex: 250 g de farinha">';
+
+
+            document.getElementById("etapas").innerHTML =
+                '<input type="text" class="etapa" placeholder="Ex: Misturar os ingredientes">';
+        }
+
+
+        // Mostrar receitas cadastradas
+
+        async function mostrarReceitas() {
+
+            console.log("mostrarReceitas foi executada");
+
+            let lista =
+                document.getElementById("listaReceitas");
+
+            lista.innerHTML =
+                "Carregando receitas...";
+
+
+            let { data, error } =
+                await supabaseClient
+                    .from("receitas")
+                    .select("*")
+                    .order("created_at", {
+                        ascending: false
+                    });
+
+
+            if (error) {
+
+                console.error(
+                    "Erro ao carregar receitas:",
+                    error
+                );
+
+                lista.innerHTML =
+                    "Erro ao carregar as receitas.";
+
+                return;
+            }
+
+
+            lista.innerHTML = "";
+
+
+            data.forEach(function(receita) {
+
+                let div =
+                    document.createElement("div");
+
+
+                div.innerHTML =
+
+                    "<h3>" +
+                    receita.nome +
+                    "</h3>" +
+
+                    "<p>" +
+                    receita.descricao +
+                    "</p>" +
+
+                    "<p>📂 " +
+                    (receita.categoria || "Sem categoria") +
+                    "</p>" +
+
+                    "<p>⏱️ " +
+                    receita.tempo +
+                    " | 🍰 " +
+                    receita.rendimento +
+                    "</p>" +
+
+                    "<button onclick=\"editarReceita('" +
+                    receita.id +
+                    "')\">" +
+                    "✏️ Editar" +
+                    "</button>" +
+
+                    "<button onclick=\"excluirReceita('" +
+                    receita.id +
+                    "')\">" +
+                    "🗑️ Excluir" +
+                    "</button>";
+
+
+                lista.appendChild(div);
+
+            });
+
+        }
+
+
+        // Editar receita
+
+        async function editarReceita(id) {
+
+            let {
+                data: receita,
+                error
+            } = await supabaseClient
+
+                .from("receitas")
+
+                .select("*")
+
+                .eq("id", id)
+
+                .single();
+
+
+            if (error) {
+
+                console.error(
+                    "Erro ao carregar receita:",
+                    error
+                );
+
+                return;
+            }
+
+
+            document.getElementById("nomeReceita").value =
+                receita.nome || "";
+
+            document.getElementById("descricaoReceita").value =
+                receita.descricao || "";
+
+            document.getElementById("tempoReceita").value =
+                receita.tempo || "";
+
+            document.getElementById("rendimentoReceita").value =
+                receita.rendimento || "";
+
+            document.getElementById("dificuldadeReceita").value =
+                receita.dificuldade || "";
+
+            document.getElementById("categoriaReceita").value =
+                receita.categoria || "Bolos";
+
+            document.getElementById("nutricionalReceita").value =
+                receita.informacoes_nutricionais || "";
+
+
+            // Ingredientes da receita
+
+            let ingredientesDiv =
+                document.getElementById("ingredientes");
+
+            ingredientesDiv.innerHTML = "";
+
+
+            if (receita.ingredientes &&
+                receita.ingredientes.length > 0) {
+
+                receita.ingredientes.forEach(function(ingrediente) {
+
+                    let input =
+                        document.createElement("input");
+
+                    input.type = "text";
+                    input.className = "ingrediente";
+                    input.value = ingrediente;
+
+                    ingredientesDiv.appendChild(input);
+
+                });
+
+            }
+
+
+            // Etapas da receita
+
+            let etapasDiv =
+                document.getElementById("etapas");
+
+            etapasDiv.innerHTML = "";
+
+
+            if (receita.etapas &&
+                receita.etapas.length > 0) {
+
+                receita.etapas.forEach(function(etapa) {
+
+                    let input =
+                        document.createElement("input");
+
+                    input.type = "text";
+                    input.className = "etapa";
+                    input.value = etapa;
+
+                    etapasDiv.appendChild(input);
+
+                });
+
+            }
+
+
+            localStorage.setItem(
+                "receitaEditando",
+                receita.id
+            );
+
+
+            document.getElementById("mensagem").innerText =
+                "Receita carregada para edição. ✏️";
+
+        }
+
+
+        // Excluir receita
+
+        async function excluirReceita(id) {
+
+            let confirmar =
+                confirm(
+                    "Tem certeza que deseja excluir esta receita?"
+                );
+
+
+            if (!confirmar) {
+                return;
+            }
+
+
+            let { error } =
+                await supabaseClient
+
+                    .from("receitas")
+
+                    .delete()
+
+                    .eq("id", id);
+
+
+            if (error) {
+
+                console.error(
+                    "Erro ao excluir receita:",
+                    error
+                );
+
+                document.getElementById("mensagem").innerText =
+                    "Erro ao excluir a receita.";
+
+                return;
+            }
+
+
+            document.getElementById("mensagem").innerText =
+                "Receita excluída com sucesso! 🗑️";
+
+
+            mostrarReceitas();
+
+        }
+
+
+        // Carrega as receitas ao abrir a página
+
+        mostrarReceitas();
+
     </script>
 
 </body>

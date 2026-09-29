@@ -18,175 +18,453 @@
 
 </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        const SUPABASE_URL = "https://psyqlxopvbzqurwecgxf.supabase.co";
-        const SUPABASE_KEY = "sb_publishable_UB8Lgo_gYB2JW0YkuHhW2Q_HD6WkR_b";
+<script>
 
-        const supabaseClient = supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
+const SUPABASE_URL =
+    "https://psyqlxopvbzqurwecgxf.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_UB8Lgo_gYB2JW0YkuHhW2Q_HD6WkR_b";
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+// Carregar receita
+
+async function carregarReceita() {
+
+    const parametros =
+        new URLSearchParams(window.location.search);
+
+    const id =
+        parametros.get("id");
+
+
+    if (!id) {
+
+        document.getElementById("receita").innerHTML =
+            "<p>Receita não encontrada.</p>";
+
+        return;
+    }
+
+
+    let {
+        data: receita,
+        error
+    } = await supabaseClient
+
+        .from("receitas")
+
+        .select("*")
+
+        .eq("id", id)
+
+        .single();
+
+
+    if (error) {
+
+        console.error(
+            "Erro ao carregar receita:",
+            error
         );
+
+        document.getElementById("receita").innerHTML =
+            "<p>Erro ao carregar a receita.</p>";
+
+        return;
+    }
+
+
+    // Ingredientes
+
+    let ingredientes = "";
+
+    if (receita.ingredientes) {
+
+        receita.ingredientes.forEach(
+            function(ingrediente, index) {
+
+                ingredientes +=
+
+                    "<label>" +
+
+                        "<input type='checkbox' " +
+                        "class='ingrediente-check' " +
+                        "onchange='atualizarProgresso()'>" +
+
+                        ingrediente +
+
+                    "</label>";
+
+            }
+        );
+
+    }
+
+
+    // Etapas
+
+    let checklist = "";
+
+    if (receita.etapas) {
+
+        receita.etapas.forEach(
+            function(etapa, index) {
+
+                checklist +=
+
+                    "<label>" +
+
+                        "<input type='checkbox' " +
+                        "class='etapa-check' " +
+                        "onchange='atualizarProgresso()'>" +
+
+                        etapa +
+
+                    "</label>";
+
+            }
+        );
+
+    }
+
+
+    // Página da receita
+
+    document.getElementById("receita").innerHTML =
+
+        "<div class='receita-card'>" +
+
+            "<div class='receita-imagem'>" +
+
+                "🍰" +
+
+            "</div>" +
+
+
+            "<div class='receita-conteudo'>" +
+
+                "<h1>" +
+                    receita.nome +
+                "</h1>" +
+
+
+                "<p class='descricao'>" +
+                    receita.descricao +
+                "</p>" +
+
+
+                "<div class='informacoes'>" +
+
+                    "<div>" +
+                        "<strong>⏱️ Tempo</strong>" +
+                        "<span>" +
+                            receita.tempo +
+                        "</span>" +
+                    "</div>" +
+
+
+                    "<div>" +
+                        "<strong>🍰 Rendimento</strong>" +
+                        "<span>" +
+                            receita.rendimento +
+                        "</span>" +
+                    "</div>" +
+
+
+                    "<div>" +
+                        "<strong>📊 Dificuldade</strong>" +
+                        "<span>" +
+                            receita.dificuldade +
+                        "</span>" +
+                    "</div>" +
+
+                "</div>" +
+
+
+                "<h2>Ingredientes</h2>" +
+
+                "<p>" +
+                    "Marque os ingredientes conforme forem separados:" +
+                "</p>" +
+
+                "<div class='checklist-ingredientes'>" +
+
+                    ingredientes +
+
+                "</div>" +
+
+            "</div>" +
+
+        "</div>" +
+
+
+        "<div class='preparo-card'>" +
+
+            "<h2>Informações nutricionais</h2>" +
+
+            "<p>" +
+
+                (
+                    receita.informacoes_nutricionais ||
+                    "Não informado."
+                ) +
+
+            "</p>" +
+
+        "</div>" +
+
+
+        "<div class='checklist-card'>" +
+
+            "<h2>✓ Checklist de preparo</h2>" +
+
+            "<p>" +
+                "Marque cada etapa conforme for concluindo:" +
+            "</p>" +
+
+            checklist +
+
+        "</div>" +
+
+
+        "<p id='progresso'>" +
+
+            "Ingredientes: 0 de " +
+            (receita.ingredientes ?
+                receita.ingredientes.length : 0) +
+
+            " | Etapas: 0 de " +
+            (receita.etapas ?
+                receita.etapas.length : 0) +
+
+        "</p>" +
+
+
+        "<button class='botao-concluir' " +
+        "onclick='marcarReceitaConcluida()'>" +
+
+            "Receita concluída! ✔️" +
+
+        "</button>" +
+
+
+        "<p id='mensagemConclusao'></p>";
+
+}
+
+
+// Atualizar progresso
+
+function atualizarProgresso() {
+
+    let ingredientes =
+        document.querySelectorAll(
+            ".ingrediente-check"
+        );
+
+    let etapas =
+        document.querySelectorAll(
+            ".etapa-check"
+        );
+
+
+    let ingredientesConcluidos = 0;
+
+    let etapasConcluidas = 0;
+
+
+    ingredientes.forEach(
+        function(ingrediente) {
+
+            if (ingrediente.checked) {
+                ingredientesConcluidos++;
+            }
+
+        }
+    );
+
+
+    etapas.forEach(
+        function(etapa) {
+
+            if (etapa.checked) {
+                etapasConcluidas++;
+            }
+
+        }
+    );
+
+
+    document.getElementById("progresso").innerText =
+
+        "Ingredientes: " +
+        ingredientesConcluidos +
+        " de " +
+        ingredientes.length +
+
+        " | Etapas: " +
+        etapasConcluidas +
+        " de " +
+        etapas.length;
+
+}
+
+
+// Concluir receita
+
 function marcarReceitaConcluida() {
 
-    let botao = document.querySelector(".botao-concluir");
-    let mensagem = document.getElementById("mensagemConclusao");
+    let botao =
+        document.querySelector(".botao-concluir");
+
+    let mensagem =
+        document.getElementById("mensagemConclusao");
+
 
     if (botao.dataset.concluida === "sim") {
 
         botao.dataset.concluida = "nao";
-        botao.innerText = "Receita concluída! ✔️";
+
+        botao.innerText =
+            "Receita concluída! ✔️";
+
         mensagem.innerText = "";
 
         return;
     }
 
-    let etapas = document.querySelectorAll(".checklist-card input[type='checkbox']");
-    let todasConcluidas = true;
 
-    etapas.forEach(function(etapa) {
-        if (!etapa.checked) {
-            todasConcluidas = false;
+    let ingredientes =
+        document.querySelectorAll(
+            ".ingrediente-check"
+        );
+
+
+    let etapas =
+        document.querySelectorAll(
+            ".etapa-check"
+        );
+
+
+    let todosIngredientes =
+        true;
+
+
+    let todasEtapas =
+        true;
+
+
+    ingredientes.forEach(
+        function(ingrediente) {
+
+            if (!ingrediente.checked) {
+                todosIngredientes = false;
+            }
+
         }
-    });
+    );
 
-    if (!todasConcluidas) {
+
+    etapas.forEach(
+        function(etapa) {
+
+            if (!etapa.checked) {
+                todasEtapas = false;
+            }
+
+        }
+    );
+
+
+    if (!todosIngredientes || !todasEtapas) {
+
         mensagem.innerText =
-            "Conclua todas as etapas antes de finalizar a receita.";
+            "Marque todos os ingredientes e conclua todas as etapas antes de finalizar a receita.";
+
         return;
     }
 
+
     botao.dataset.concluida = "sim";
-    botao.innerText = "Desmarcar conclusão";
-    mensagem.innerText = "Receita concluída! ✔️";
+
+botao.innerText =
+    "Desmarcar conclusão ↩️";
+
+mensagem.innerText =
+    "Receita concluída! ✔️";
+
+soltarConfetes();
+
 }
-function atualizarProgresso() {
 
-    let etapas = document.querySelectorAll(".checklist-card input[type='checkbox']");
-    let concluidas = 0;
 
-    etapas.forEach(function(etapa) {
-        if (etapa.checked) {
-            concluidas++;
-        }
-    });
+carregarReceita();
+function soltarConfetes() {
 
-    document.getElementById("progresso").innerText =
-        "Progresso: " + concluidas + " de " + etapas.length + " etapas concluídas";
-}
-        async function carregarReceita() {
+    const botao = document.querySelector(".botao-concluir");
+    const quantidade = 35;
 
-            const parametros = new URLSearchParams(window.location.search);
-            const id = parametros.get("id");
+    const rect = botao.getBoundingClientRect();
 
-            let { data: receita, error } = await supabaseClient
-                .from("receitas")
-                .select("*")
-                .eq("id", id)
-                .single();
+    for (let i = 0; i < quantidade; i++) {
 
-            if (error) {
-                console.error("Erro ao carregar receita:", error);
-                document.getElementById("receita").innerHTML =
-                    "<p>Erro ao carregar a receita.</p>";
-                return;
+        const confete = document.createElement("span");
+
+        confete.innerText = "✦";
+
+        confete.style.position = "fixed";
+        confete.style.left = (rect.left + rect.width / 2) + "px";
+        confete.style.top = (rect.top + rect.height / 2) + "px";
+        confete.style.fontSize = (10 + Math.random() * 12) + "px";
+        confete.style.fontWeight = "bold";
+        confete.style.color =
+            ["#4D0011", "#7B1830", "#A64A5F", "#D9A441"][Math.floor(Math.random() * 4)];
+
+        confete.style.zIndex = "9999";
+        confete.style.pointerEvents = "none";
+
+        const angulo = Math.random() * Math.PI * 2;
+        const distancia = 70 + Math.random() * 120;
+
+        const x = Math.cos(angulo) * distancia;
+        const y = Math.sin(angulo) * distancia;
+
+        confete.animate(
+            [
+                {
+                    transform: "translate(-50%, -50%) scale(0)",
+                    opacity: 1
+                },
+                {
+                    transform:
+                        `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(1)`,
+                    opacity: 0
+                }
+            ],
+            {
+                duration: 900 + Math.random() * 500,
+                easing: "cubic-bezier(.2,.8,.3,1)"
             }
+        );
 
-            let ingredientes = "";
+        document.body.appendChild(confete);
 
-            receita.ingredientes.forEach(function(ingrediente) {
-                ingredientes += "<li>" + ingrediente + "</li>";
-            });
-
-            let etapas = "";
-
-            receita.etapas.forEach(function(etapa) {
-                etapas += "<li>" + etapa + "</li>";
-            });
-let checklist = "";
-
-receita.etapas.forEach(function(etapa, index) {
-    checklist +=
-        "<label>" +
-       "<input type='checkbox' id='etapa" + index + "' onchange='atualizarProgresso()'>" +
-        etapa +
-        "</label>";
-});
-document.getElementById("receita").innerHTML =
-    "<div class='receita-card'>" +
-
-        "<div class='receita-imagem'>" +
-            "🍰" +
-        "</div>" +
-
-        "<div class='receita-conteudo'>" +
-
-            "<h1>" + receita.nome + "</h1>" +
-
-            "<p class='descricao'>" +
-                receita.descricao +
-            "</p>" +
-
-            "<div class='informacoes'>" +
-
-                "<div>" +
-                    "<strong>⏱️ Tempo</strong>" +
-                    "<span>" + receita.tempo + "</span>" +
-                "</div>" +
-
-                "<div>" +
-                    "<strong>🍰 Rendimento</strong>" +
-                    "<span>" + receita.rendimento + "</span>" +
-                "</div>" +
-
-                "<div>" +
-                    "<strong>📊 Dificuldade</strong>" +
-                    "<span>" + receita.dificuldade + "</span>" +
-                "</div>" +
-
-            "</div>" +
-
-            "<h2>Ingredientes</h2>" +
-            "<ul>" + ingredientes + "</ul>" +
-
-        "</div>" +
-
-    "</div>" +
-
-"<div class='preparo-card'>" +
-    "<h2>Informações nutricionais</h2>" +
-    "<p>" + (receita.informacoes_nutricionais || "Não informado.") + "</p>" +
-"</div>" +
-
-"<div class='checklist-card'>" +
-    "<h2>✓ Checklist de preparo</h2>" +
-    "<p>Marque cada etapa conforme for concluindo:</p>" +
-    checklist +
-"</div>" +
-
-"<p id='progresso'>Progresso: 0 de " + receita.etapas.length + " etapas concluídas</p>" +
-
-"<button class='botao-concluir' onclick='marcarReceitaConcluida()'>" +
-    "Receita concluída! ✔️" +
-"</button>" +
-
-"<p id='mensagemConclusao'></p>";
-        }
-
-        carregarReceita();
-
-    </script>
+        setTimeout(() => {
+            confete.remove();
+        }, 1500);
+    }
+}
+</script>
 
 </body>
 
 </html>
-.receita-detalhes {
-    background: white;
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 35px;
-    border-radius: 20px;
-    box-shadow: 0 5px 20px rgba(77, 0, 17, 0.12);
-}

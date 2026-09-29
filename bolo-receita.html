@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="estilo.css">
+    <title>Bolo de Chocolate - Infinity Food Help</title>
+</head>
+
+<body>
+
+<div class="receita-container">
+
+    <button class="voltar" onclick="window.location.href='bolo.html'">
+        ← Voltar
+    </button>
+
+    <div class="receita-card">
+
+        <div class="receita-imagem">
+        </div>
+
+        <div class="receita-conteudo">
+
+            <h1>Bolo de Chocolate</h1>
+
+            <p class="descricao">
+                Um bolo de chocolate fofinho, saboroso e fácil de preparar.
+            </p>
+
+            <div class="informacoes">
+
+                <div>
+                    <strong>⏱️ Tempo</strong>
+                    <p>50 minutos</p>
+                </div>
+
+                <div>
+                    <strong>🍰 Rendimento</strong>
+                    <p>10 fatias</p>
+                </div>
+
+            </div>
+
+            <h2>Ingredientes</h2>
+
+            <ul>
+                <li>2 xícaras de farinha de trigo</li>
+                <li>1 xícara de açúcar</li>
+                <li>1 xícara de chocolate em pó</li>
+                <li>1 xícara de leite</li>
+                <li>1/2 xícara de óleo</li>
+                <li>2 ovos</li>
+                <li>1 colher de sopa de fermento</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div class="preparo-card">
+
+        <h2>Modo de preparo</h2>
+
+        <ol>
+            <li>Misture os ovos, o açúcar e o óleo.</li>
+            <li>Acrescente o leite e o chocolate em pó.</li>
+            <li>Adicione a farinha de trigo e misture bem.</li>
+            <li>Acrescente o fermento delicadamente.</li>
+            <li>Coloque a massa em uma forma untada.</li>
+            <li>Asse em forno preaquecido a 180°C por aproximadamente 40 minutos.</li>
+        </ol>
+
+    </div>
+
+    <div class="checklist-card">
+
+        <h2>✓ Checklist de preparo</h2>
+
+        <p>Marque cada etapa conforme for concluindo.</p>
+
+        <label>
+            <input type="checkbox" onchange="atualizarProgresso()">
+            Misturar os ovos, o açúcar e o óleo
+        </label>
+
+        <label>
+            <input type="checkbox" onchange="atualizarProgresso()">
+            Acrescentar o leite e o chocolate em pó
+        </label>
+
+        <label>
+            <input type="checkbox" onchange="atualizarProgresso()">
+            Adicionar a farinha de trigo
+        </label>
+
+        <label>
+            <input type="checkbox" onchange="atualizarProgresso()">
+            Acrescentar o fermento
+        </label>
+
+        <label>
+            <input type="checkbox" onchange="atualizarProgresso()">
+            Colocar a massa na forma
+        </label>
+
+        <label>
+            <input type="checkbox" onchange="atualizarProgresso()">
+            Assar o bolo
+        </label>
+
+    </div>
+
+    <p id="progresso">
+        Progresso: 0 de 6 etapas concluídas
+    </p>
+
+    <button class="botao-concluir" onclick="marcarReceitaConcluida()">
+        Receita concluída! ✔️
+    </button>
+
+    <p id="mensagemConclusao"></p>
+
+</div>
+
+<script>
+
+function atualizarProgresso() {
+
+    let etapas = document.querySelectorAll(".checklist-card input[type='checkbox']");
+    let concluidas = 0;
+
+    etapas.forEach(function(etapa) {
+        if (etapa.checked) {
+            concluidas++;
+        }
+    });
+
+    document.getElementById("progresso").innerText =
+        "Progresso: " + concluidas + " de " + etapas.length + " etapas concluídas";
+}
+
+function marcarReceitaConcluida() {
+
+    let botao = document.querySelector(".botao-concluir");
+    let mensagem = document.getElementById("mensagemConclusao");
+
+    let etapas = document.querySelectorAll(".checklist-card input[type='checkbox']");
+    let todasConcluidas = true;
+
+    etapas.forEach(function(etapa) {
+        if (!etapa.checked) {
+            todasConcluidas = false;
+        }
+    });
+
+    if (!todasConcluidas) {
+        mensagem.innerText =
+            "Conclua todas as etapas antes de finalizar a receita.";
+        return;
+    }
+
+    if (botao.dataset.concluida === "sim") {
+
+        botao.dataset.concluida = "nao";
+        botao.innerText = "Receita concluída! ✔️";
+        mensagem.innerText = "";
+
+        return;
+    }
+
+    botao.dataset.concluida = "sim";
+    botao.innerText = "Desmarcar receita concluída";
+    mensagem.innerText = "Receita concluída! ✔️";
+}
+
+</script>
+
+</body>
+</html>
