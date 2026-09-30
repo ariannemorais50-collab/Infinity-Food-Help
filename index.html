@@ -16,11 +16,17 @@
 
             <h2>Receitas para facilitar o seu trabalho</h2>
 
-            <p>Aprenda o passo a passo das nossas receitas de forma simples e prática.</p>
+            <p>
+                Aprenda o passo a passo das nossas receitas
+                de forma simples e prática.
+            </p>
 
-            <p>Um guia prático para auxiliar os funcionários no preparo dos produtos.</p>
+            <p>
+                Um guia prático para auxiliar os funcionários
+                no preparo dos produtos.
+            </p>
 
-            <button onclick="window.location.href='login.html'">
+            <button onclick="entrarNoSite()">
                 Entrar
             </button>
 
@@ -28,15 +34,47 @@
                 Feito por: Arianne, Fernanda, Esther e Eliza
             </p>
 
+            <a href="termos.html" class="link-termos">
+                Termos de Uso e Diretrizes
+            </a>
+
         </div>
 
         <div class="lado-direito">
+
             <div class="imagem-placeholder">
                 IMAGEM
             </div>
+
         </div>
 
     </div>
 
+
+    <script>
+
+        function entrarNoSite() {
+
+            // Verifica se os Termos já foram aceitos
+
+            if (localStorage.getItem("termosAceitos") !== "sim") {
+
+                window.location.href = "termos.html";
+
+                return;
+            }
+
+            // Marca que a apresentação já foi vista
+
+            localStorage.setItem("jaViuInicio", "sim");
+
+            // Vai para o login
+
+            window.location.href = "login.html";
+        }
+
+    </script>
+
 </body>
+
 </html>

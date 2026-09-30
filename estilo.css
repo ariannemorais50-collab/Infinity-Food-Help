@@ -922,3 +922,90 @@ body > button:hover {
         transform: scale(1);
     }
 }
+/* =========================
+   TERMOS DE USO
+========================= */
+
+.termos-container {
+    min-height: 100vh;
+    background-color: var(--branco);
+    padding: 40px 20px;
+}
+
+.termos-card {
+    max-width: 900px;
+    margin: 50px auto 0;
+    background-color: white;
+    padding: 45px;
+    border-radius: 28px;
+    box-shadow: 0 8px 25px rgba(77, 0, 17, 0.12);
+}
+
+.termos-card h1 {
+    color: var(--vinho);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.termos-card h2 {
+    color: var(--marsala);
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.termos-card p {
+    color: #444;
+    line-height: 1.7;
+    font-size: 16px;
+}
+
+.termos-card ul {
+    color: #444;
+    line-height: 1.9;
+    padding-left: 25px;
+}
+
+.termos-introducao {
+    text-align: center;
+    font-size: 17px !important;
+}
+
+.termos-final {
+    margin-top: 35px;
+    padding: 18px;
+    background-color: #f8e9ed;
+    border-radius: 15px;
+    color: var(--vinho) !important;
+    font-weight: bold;
+}
+
+.termos-container .login-voltar {
+    position: fixed;
+    top: 25px;
+    left: 30px;
+    background-color: var(--marsala);
+    color: white;
+    z-index: 10;
+}
+
+.termos-container .login-voltar:hover {
+    background-color: var(--vinho);
+}
+.botao-aceitar-termos {
+    display: block;
+    margin: 25px auto 0;
+    background-color: var(--marsala);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.botao-aceitar-termos:hover {
+    background-color: var(--vinho);
+    transform: translateY(-2px);
+}
