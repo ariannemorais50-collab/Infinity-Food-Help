@@ -1156,4 +1156,35 @@ body > button:hover {
     font-size: 32px;
     margin: 0;
 }
+/* Botão Voltar da tela de cadastrar receitas */
+.botao-voltar {
+    background-color: #7B1830;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s;
+}
 
+.botao-voltar:hover {
+    background-color: #5f1225;
+}
+/* Centraliza título e subtítulo da tela de cadastrar receitas */
+.gerenciamento-container > h1,
+.gerenciamento-container > p {
+    text-align: center;
+}
+/* Posiciona o botão Voltar no canto superior */
+.botao-voltar {
+    position: absolute;
+    top: 20px;
+    left: 25px;
+}
+.botao-voltar {
+    position: absolute;
+    top: 25px;
+    left: 80px;
+}
