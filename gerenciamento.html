@@ -25,7 +25,8 @@
 
             <label for="descricaoReceita">Descrição</label>
             <input type="text" id="descricaoReceita" placeholder="Descrição da receita">
-
+<label for="imagemReceita">Imagem da receita</label>
+<input type="text" id="imagemReceita" placeholder="Cole aqui o link da imagem">
 <label>Informações nutricionais</label>
 
 <div class="nutricionais">
@@ -53,17 +54,20 @@
 </div>
             <div class="campos-duplos">
 
-                <div>
-                    <label for="tempoReceita">Tempo</label>
-                    <input type="text" id="tempoReceita" placeholder="Ex: 60 min">
-                </div>
+    <div>
+        <label for="tempoReceita">Tempo</label>
+        <input type="text" id="tempoReceita" placeholder="Ex: 60 min">
+    </div>
 
-                <div>
-                    <label for="rendimentoReceita">Rendimento</label>
-                    <input type="text" id="rendimentoReceita" placeholder="Ex: 12 porções">
-                </div>
+    <div>
+        <label for="rendimentoReceita">Rendimento</label>
+        <input type="text" id="rendimentoReceita" placeholder="Ex: 12 porções">
+    </div>
 
-            </div>
+</div>
+
+<label for="utensiliosReceita">Utensílios</label>
+<input type="text" id="utensiliosReceita" placeholder="Ex: Batedeira, tigela, forma">
 
             <label for="dificuldadeReceita">Dificuldade</label>
 
@@ -187,18 +191,23 @@
 
             let descricao =
                 document.getElementById("descricaoReceita").value;
+                let imagem =
+    document.getElementById("imagemReceita").value;
 
             let tempo =
                 document.getElementById("tempoReceita").value;
 
-            let rendimento =
-                document.getElementById("rendimentoReceita").value;
+let rendimento =
+    document.getElementById("rendimentoReceita").value;
 
-            let dificuldade =
-                document.getElementById("dificuldadeReceita").value;
+let utensilios =
+    document.getElementById("utensiliosReceita").value;
 
-            let categoria =
-                document.getElementById("categoriaReceita").value;
+let dificuldade =
+    document.getElementById("dificuldadeReceita").value;
+
+let categoria =
+    document.getElementById("categoriaReceita").value;
 
             let porcao =
     document.getElementById("porcaoReceita").value;
@@ -262,8 +271,10 @@ let informacoesNutricionais =
 
                         nome: nome,
                         descricao: descricao,
+                        imagem: imagem,
                         tempo: tempo,
                         rendimento: rendimento,
+                        utensilios: utensilios,
                         dificuldade: dificuldade,
                         categoria: categoria,
                         informacoes_nutricionais: informacoesNutricionais,
@@ -281,26 +292,28 @@ let informacoesNutricionais =
 
             else {
 
-                ({ data, error } = await supabaseClient
-                    .from("receitas")
-                    .insert([
-                        {
+    ({ data, error } = await supabaseClient
+        .from("receitas")
+        .insert([
+            {
 
-                            nome: nome,
-                            descricao: descricao,
-                            tempo: tempo,
-                            rendimento: rendimento,
-                            dificuldade: dificuldade,
-                            categoria: categoria,
-                            informacoes_nutricionais: informacoesNutricionais,
-                            ingredientes: ingredientes,
-                            etapas: etapas
-
-                        }
-                    ])
-                    .select());
+                nome: nome,
+                descricao: descricao,
+                imagem: imagem,
+                tempo: tempo,
+                rendimento: rendimento,
+                utensilios: utensilios,
+                dificuldade: dificuldade,
+                categoria: categoria,
+                informacoes_nutricionais: informacoesNutricionais,
+                ingredientes: ingredientes,
+                etapas: etapas
 
             }
+        ])
+        .select());
+
+}
 
 
             // Erro
@@ -344,11 +357,16 @@ let informacoesNutricionais =
 
             document.getElementById("nomeReceita").value = "";
             document.getElementById("descricaoReceita").value = "";
+            document.getElementById("imagemReceita").value = "";
             document.getElementById("tempoReceita").value = "";
             document.getElementById("rendimentoReceita").value = "";
+            document.getElementById("utensiliosReceita").value = "";
             document.getElementById("dificuldadeReceita").value = "";
             document.getElementById("categoriaReceita").value = "Bolos";
-            document.getElementById("nutricionalReceita").value = "";
+            document.getElementById("porcaoReceita").value = "";
+document.getElementById("caloriasReceita").value = "";
+document.getElementById("proteinasReceita").value = "";
+document.getElementById("gordurasReceita").value = "";
 
 
             document.getElementById("ingredientes").innerHTML =
@@ -479,6 +497,8 @@ let informacoesNutricionais =
 
             document.getElementById("descricaoReceita").value =
                 receita.descricao || "";
+                document.getElementById("imagemReceita").value =
+    receita.imagem || "";
 
             document.getElementById("tempoReceita").value =
                 receita.tempo || "";

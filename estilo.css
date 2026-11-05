@@ -7,6 +7,7 @@
     --vinho: #4D0011;
     --marsala: #7B1830;
     --marsala-claro: #A64A5F;
+    --rosa-claro: #F3E3E6;
     --vermelho: #b00020;
 }
 
@@ -1130,10 +1131,6 @@ body > button:hover {
     font-size: 36px;
 }
 
-<div class="cabecalho-inicial">
-    <img src="logo.png" alt="Logo Infinity Food Help" class="logo-inicial">
-    <h1>Infinity Food Help</h1>
-</div>
 
 .cabecalho-inicial {
     display: flex;
@@ -1187,4 +1184,178 @@ body > button:hover {
     position: absolute;
     top: 25px;
     left: 80px;
+}
+/* =========================
+   NOVO LAYOUT DA RECEITA
+   ========================= */
+
+.receita-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 35px;
+}
+
+.receita-imagem {
+    width: 42%;
+    height: 350px;
+    min-height: 350px;
+    max-height: 350px;
+    flex-shrink: 0;
+}
+
+.receita-conteudo {
+    flex: 1;
+    min-width: 0;
+}
+
+.informacoes {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    flex-wrap: nowrap;
+}
+
+.informacoes div {
+    flex: 1;
+    text-align: center;
+}
+
+/* Card separado dos ingredientes */
+
+.ingredientes-card {
+    background-color: white;
+    border: 2px solid var(--rosa-claro);
+    border-radius: 28px;
+    padding: 30px;
+    margin-top: 25px;
+    box-shadow: 0 8px 25px rgba(77, 0, 17, 0.08);
+}
+
+.ingredientes-card h2 {
+    color: var(--marsala);
+    margin-top: 0;
+}
+
+.checklist-ingredientes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 20px;
+    margin-top: 15px;
+}
+
+.checklist-ingredientes label {
+    margin: 0;
+}
+
+/* Celular */
+
+@media (max-width: 700px) {
+
+    .receita-card {
+        flex-direction: column;
+    }
+
+    .receita-imagem {
+        width: 100%;
+        height: 280px;
+        min-height: 280px;
+        max-height: 280px;
+    }
+
+    .informacoes {
+        flex-wrap: wrap;
+    }
+
+    .informacoes div {
+        min-width: 0;
+    }
+
+    .checklist-ingredientes {
+        grid-template-columns: 1fr;
+    }
+}
+/* =========================
+   ORGANIZAÇÃO DAS INFORMAÇÕES
+   ========================= */
+
+.receita-card .informacoes {
+    display: block !important;
+    width: 100% !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 25px 0 !important;
+    box-shadow: none !important;
+}
+
+.receita-card .informacao-principal {
+    display: block !important;
+    width: 100% !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+}
+
+.receita-card .linha-informacoes {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 12px !important;
+    width: 100% !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+}
+
+.receita-card .linha-informacoes > div {
+    flex: 1 1 0 !important;
+    background-color: var(--rosa-claro) !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 12px 18px !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 5px !important;
+    text-align: center !important;
+    box-shadow: none !important;
+}
+
+.receita-card .utensilios {
+    width: 100% !important;
+    margin-top: 12px !important;
+    background-color: var(--rosa-claro) !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 12px 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 5px !important;
+    text-align: left !important;
+    box-shadow: none !important;
+}
+
+.receita-card .utensilios strong,
+.receita-card .utensilios span {
+    color: var(--vinho) !important;
+}
+
+@media (max-width: 700px) {
+    .receita-card .linha-informacoes {
+        flex-direction: column !important;
+    }
+}
+.receita-imagem {
+    overflow: hidden;
+}
+
+.receita-imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 22px;
+    display: block;
 }

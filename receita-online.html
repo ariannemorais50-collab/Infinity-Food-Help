@@ -90,7 +90,7 @@ async function carregarReceita() {
     if (receita.ingredientes) {
 
         receita.ingredientes.forEach(
-            function(ingrediente, index) {
+            function(ingrediente) {
 
                 ingredientes +=
 
@@ -117,7 +117,7 @@ async function carregarReceita() {
     if (receita.etapas) {
 
         receita.etapas.forEach(
-            function(etapa, index) {
+            function(etapa) {
 
                 checklist +=
 
@@ -144,11 +144,10 @@ async function carregarReceita() {
         "<div class='receita-card'>" +
 
             "<div class='receita-imagem'>" +
-
-                "🍰" +
-
-            "</div>" +
-
+    (receita.imagem
+        ? "<img src='" + receita.imagem + "' alt='Imagem de " + receita.nome + "'>"
+        : "📷") +
+"</div>" +
 
             "<div class='receita-conteudo'>" +
 
@@ -156,51 +155,69 @@ async function carregarReceita() {
                     receita.nome +
                 "</h1>" +
 
-
                 "<p class='descricao'>" +
                     receita.descricao +
                 "</p>" +
 
-
                 "<div class='informacoes'>" +
 
-                    "<div>" +
-                        "<strong>⏱️ Tempo</strong>" +
-                        "<span>" +
-                            receita.tempo +
-                        "</span>" +
-                    "</div>" +
+    "<div class='informacao-principal'>" +
+
+        "<div class='linha-informacoes'>" +
+
+            "<div>" +
+                "<strong>⏱️ Tempo</strong>" +
+                "<span>" +
+                    receita.tempo +
+                "</span>" +
+            "</div>" +
+
+            "<div>" +
+                "<strong>🍰 Rendimento</strong>" +
+                "<span>" +
+                    receita.rendimento +
+                "</span>" +
+            "</div>" +
+
+            "<div>" +
+                "<strong>📊 Dificuldade</strong>" +
+                "<span>" +
+                    receita.dificuldade +
+                "</span>" +
+            "</div>" +
+
+        "</div>" +
+
+        "<div class='utensilios'>" +
+
+            "<strong>🥄 Utensílios</strong>" +
+
+            "<span>" +
+                (receita.utensilios || "Não informado.") +
+            "</span>" +
+
+        "</div>" +
+
+    "</div>" +
+
+"</div>" +
+
+            "</div>" +
+
+        "</div>" +
 
 
-                    "<div>" +
-                        "<strong>🍰 Rendimento</strong>" +
-                        "<span>" +
-                            receita.rendimento +
-                        "</span>" +
-                    "</div>" +
+        "<div class='ingredientes-card'>" +
 
+            "<h2>Ingredientes</h2>" +
 
-                    "<div>" +
-                        "<strong>📊 Dificuldade</strong>" +
-                        "<span>" +
-                            receita.dificuldade +
-                        "</span>" +
-                    "</div>" +
+            "<p>" +
+                "Marque os ingredientes conforme forem separados:" +
+            "</p>" +
 
-                "</div>" +
+            "<div class='checklist-ingredientes'>" +
 
-
-                "<h2>Ingredientes</h2>" +
-
-                "<p>" +
-                    "Marque os ingredientes conforme forem separados:" +
-                "</p>" +
-
-                "<div class='checklist-ingredientes'>" +
-
-                    ingredientes +
-
-                "</div>" +
+                ingredientes +
 
             "</div>" +
 
@@ -239,12 +256,20 @@ async function carregarReceita() {
         "<p id='progresso'>" +
 
             "Ingredientes: 0 de " +
-            (receita.ingredientes ?
-                receita.ingredientes.length : 0) +
+
+            (
+                receita.ingredientes ?
+                receita.ingredientes.length :
+                0
+            ) +
 
             " | Etapas: 0 de " +
-            (receita.etapas ?
-                receita.etapas.length : 0) +
+
+            (
+                receita.etapas ?
+                receita.etapas.length :
+                0
+            ) +
 
         "</p>" +
 
@@ -348,19 +373,15 @@ function marcarReceitaConcluida() {
             ".ingrediente-check"
         );
 
-
     let etapas =
         document.querySelectorAll(
             ".etapa-check"
         );
 
 
-    let todosIngredientes =
-        true;
+    let todosIngredientes = true;
 
-
-    let todasEtapas =
-        true;
+    let todasEtapas = true;
 
 
     ingredientes.forEach(
@@ -396,73 +417,135 @@ function marcarReceitaConcluida() {
 
     botao.dataset.concluida = "sim";
 
-botao.innerText =
-    "Desmarcar conclusão ↩️";
+    botao.innerText =
+        "Desmarcar conclusão ↩️";
 
-mensagem.innerText =
-    "Receita concluída! ✔️";
+    mensagem.innerText =
+        "Receita concluída! ✔️";
 
-soltarConfetes();
+    soltarConfetes();
 
 }
 
 
+// Carregar receita
+
 carregarReceita();
+
+
+// Confetes
+
 function soltarConfetes() {
 
-    const botao = document.querySelector(".botao-concluir");
+    const botao =
+        document.querySelector(".botao-concluir");
+
     const quantidade = 35;
 
-    const rect = botao.getBoundingClientRect();
+    const rect =
+        botao.getBoundingClientRect();
+
 
     for (let i = 0; i < quantidade; i++) {
 
-        const confete = document.createElement("span");
+        const confete =
+            document.createElement("span");
 
         confete.innerText = "✦";
 
         confete.style.position = "fixed";
-        confete.style.left = (rect.left + rect.width / 2) + "px";
-        confete.style.top = (rect.top + rect.height / 2) + "px";
-        confete.style.fontSize = (10 + Math.random() * 12) + "px";
-        confete.style.fontWeight = "bold";
+
+        confete.style.left =
+            (rect.left + rect.width / 2) + "px";
+
+        confete.style.top =
+            (rect.top + rect.height / 2) + "px";
+
+        confete.style.fontSize =
+            (10 + Math.random() * 12) + "px";
+
+        confete.style.fontWeight =
+            "bold";
+
         confete.style.color =
-            ["#4D0011", "#7B1830", "#A64A5F", "#D9A441"][Math.floor(Math.random() * 4)];
+            [
+                "#4D0011",
+                "#7B1830",
+                "#A64A5F",
+                "#D9A441"
+            ][
+                Math.floor(Math.random() * 4)
+            ];
 
-        confete.style.zIndex = "9999";
-        confete.style.pointerEvents = "none";
+        confete.style.zIndex =
+            "9999";
 
-        const angulo = Math.random() * Math.PI * 2;
-        const distancia = 70 + Math.random() * 120;
+        confete.style.pointerEvents =
+            "none";
 
-        const x = Math.cos(angulo) * distancia;
-        const y = Math.sin(angulo) * distancia;
+
+        const angulo =
+            Math.random() * Math.PI * 2;
+
+        const distancia =
+            70 + Math.random() * 120;
+
+
+        const x =
+            Math.cos(angulo) * distancia;
+
+        const y =
+            Math.sin(angulo) * distancia;
+
 
         confete.animate(
+
             [
-                {
-                    transform: "translate(-50%, -50%) scale(0)",
-                    opacity: 1
-                },
+
                 {
                     transform:
+                        "translate(-50%, -50%) scale(0)",
+
+                    opacity: 1
+                },
+
+                {
+
+                    transform:
                         `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(1)`,
+
                     opacity: 0
                 }
+
             ],
+
             {
-                duration: 900 + Math.random() * 500,
-                easing: "cubic-bezier(.2,.8,.3,1)"
+
+                duration:
+                    900 + Math.random() * 500,
+
+                easing:
+                    "cubic-bezier(.2,.8,.3,1)"
+
             }
+
         );
+
 
         document.body.appendChild(confete);
 
-        setTimeout(() => {
-            confete.remove();
-        }, 1500);
+
+        setTimeout(
+            () => {
+                confete.remove();
+            },
+            1500
+        );
+
     }
+
 }
+
 </script>
 
 </body>
