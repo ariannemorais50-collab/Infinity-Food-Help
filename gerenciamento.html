@@ -26,10 +26,31 @@
             <label for="descricaoReceita">Descrição</label>
             <input type="text" id="descricaoReceita" placeholder="Descrição da receita">
 
-            <label for="nutricionalReceita">Informações nutricionais</label>
-            <textarea id="nutricionalReceita"
-                placeholder="Ex: Porção: 100g | Calorias: 250 kcal | Carboidratos: 30g | Proteínas: 5g | Gorduras: 10g"></textarea>
+<label>Informações nutricionais</label>
 
+<div class="nutricionais">
+
+    <div>
+        <label for="porcaoReceita">Porção</label>
+        <input type="text" id="porcaoReceita" placeholder="Ex: 100g">
+    </div>
+
+    <div>
+        <label for="caloriasReceita">Calorias</label>
+        <input type="text" id="caloriasReceita" placeholder="Ex: 250 kcal">
+    </div>
+
+    <div>
+        <label for="proteinasReceita">Proteínas</label>
+        <input type="text" id="proteinasReceita" placeholder="Ex: 5g">
+    </div>
+
+    <div>
+        <label for="gordurasReceita">Gorduras</label>
+        <input type="text" id="gordurasReceita" placeholder="Ex: 10g">
+    </div>
+
+</div>
             <div class="campos-duplos">
 
                 <div>
@@ -179,8 +200,23 @@
             let categoria =
                 document.getElementById("categoriaReceita").value;
 
-            let informacoesNutricionais =
-                document.getElementById("nutricionalReceita").value;
+            let porcao =
+    document.getElementById("porcaoReceita").value;
+
+let calorias =
+    document.getElementById("caloriasReceita").value;
+
+let proteinas =
+    document.getElementById("proteinasReceita").value;
+
+let gorduras =
+    document.getElementById("gordurasReceita").value;
+
+let informacoesNutricionais =
+    "Porção: " + porcao +
+    " | Calorias: " + calorias +
+    " | Proteínas: " + proteinas +
+    " | Gorduras: " + gorduras;
 
             let receitaEditando =
                 localStorage.getItem("receitaEditando");
@@ -456,8 +492,10 @@
             document.getElementById("categoriaReceita").value =
                 receita.categoria || "Bolos";
 
-            document.getElementById("nutricionalReceita").value =
-                receita.informacoes_nutricionais || "";
+            document.getElementById("porcaoReceita").value = "";
+document.getElementById("caloriasReceita").value = "";
+document.getElementById("proteinasReceita").value = "";
+document.getElementById("gordurasReceita").value = "";
 
 
             // Ingredientes da receita
