@@ -1009,3 +1009,151 @@ body > button:hover {
     background-color: var(--vinho);
     transform: translateY(-2px);
 }
+
+
+/* Corrige as cores da caixa Seu Progresso */
+.progresso-box {
+    background-color: #7B1830 !important;
+    color: #FFFFFF !important;
+}
+
+.progresso-box strong,
+.progresso-box p,
+.progresso-box #progresso,
+#progresso {
+    color: #FFFFFF !important;
+}
+
+
+/* Painel de apresentação da página inicial */
+.lado-direito {
+    background-color: #7B1830;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.painel-apresentacao {
+    width: 100%;
+    max-width: 440px;
+}
+
+.painel-apresentacao h2 {
+    color: #FFFFFF;
+    font-size: 32px;
+    margin-bottom: 18px;
+}
+
+.painel-apresentacao > p {
+    color: #FFFFFF;
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
+
+.destaque-apresentacao {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin: 24px 0;
+}
+
+.destaque-apresentacao > span {
+    background-color: #FFFFFF;
+    color: #7B1830;
+    border-radius: 50%;
+    min-width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.destaque-apresentacao h3 {
+    color: #FFFFFF;
+    margin: 0 0 6px;
+}
+
+.destaque-apresentacao p {
+    color: #FFFFFF;
+    line-height: 1.5;
+    margin: 0;
+}
+
+@media (max-width: 700px) {
+    .lado-direito {
+        padding: 30px 24px;
+    }
+
+    .painel-apresentacao h2 {
+        font-size: 26px;
+    }
+}
+
+/* Diminui as letras do painel marsala da página inicial */
+.painel-apresentacao h2 {
+    font-size: 26px;
+}
+
+.painel-apresentacao > p {
+    font-size: 14px;
+}
+
+.destaque-apresentacao h3 {
+    font-size: 17px;
+}
+
+.destaque-apresentacao p {
+    font-size: 13px;
+}
+
+/* Logo da tela inicial */
+.logo-inicial {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 18px;
+}
+
+/* Logo redondinha e título um pouco menor */
+.logo-inicial {
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.lado-esquerdo h1 {
+    font-size: 36px;
+}
+
+<div class="cabecalho-inicial">
+    <img src="logo.png" alt="Logo Infinity Food Help" class="logo-inicial">
+    <h1>Infinity Food Help</h1>
+</div>
+
+.cabecalho-inicial {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.logo-inicial {
+    width: 65px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0;
+}
+
+.cabecalho-inicial h1 {
+    font-size: 32px;
+    margin: 0;
+}
+
